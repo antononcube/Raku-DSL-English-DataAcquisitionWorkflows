@@ -47,7 +47,7 @@ Data quality verification specification:
 say ToDataAcquisitionWorkflowCode(
     "verify the quality of the database dbGJ99;
      what fraction of records have missing data;
-     what are distribtions in the numerical columns",
+     what are the distributions of the numerical columns",
     "WL-System");
 ``` 
 

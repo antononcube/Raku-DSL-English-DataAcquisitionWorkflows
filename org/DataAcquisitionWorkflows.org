@@ -70,6 +70,8 @@
    - Get metadata for each movie in a separate table
    - Make the metadata table in long form
 * TODO Implementation [0%] [0/3]
-** TODO GitHub repository 
-** TODO Package structure
+** DONE GitHub repository
+** DONE Package structure
 ** TODO Main grammar
+** TODO Metadata entities package
+** TODO Data acquisition phrases
