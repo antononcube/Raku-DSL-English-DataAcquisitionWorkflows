@@ -1,0 +1,75 @@
+#+TITLE: Data Acquisition Workflows
+#+AUTHOR: Anton Antonov
+#+EMAIL: antononcube@posteo.net
+#+TODO: TODO ONGOING MAYBE | DONE CANCELED 
+#+OPTIONS: toc:1 num:0
+
+* Scope
+** Data availability queries
+- For purpose
+  - For types of data generators
+  - For applicable transformations 
+  - By source
+  - By properties
+    - Quality
+    - Missing data
+  - Distributions
+- Ranomly generated
+  - Properties
+  - Variable relationships
+** Data manipulation
+- Specifications
+- Transformations
+  - Re-shaping
+  - Combining
+  - Grouping
+  - Filtering
+- Quality verification
+  - Pre-manipulation
+  - Post-manipulation
+** Final form
+- Target consumer
+- Target repository
+- Target organization / format
+- Relational database
+  - XML
+  - JSON
+  - CSV
+  - Etc.
+** Documentation
+- Generated
+- Manually written
+** Unit tests
+- Social contract with target consumer
+- Generated
+- Manually written
+* TODO Sample dialogs [0%] [0/4]
+1. [ ] Random tabular data 
+   - Create a random dataset with five columns and 2000 rows
+   - At least two of the columns are categorical
+   - Sprinkle 200 NAs
+2. [ ] Random tabular data
+   - Make a dataset with 200 numerical columns and 1000 rows
+   - Each column is with Normal or Poisson distribution
+   - The Normal distributions have means from -10 to 100
+   - And standard deviations from 10% to 200%
+   - Make there are at least 20 column pairs that correlate
+3. [ ] Fuel pumps data
+   - Take time series data for company's fuel pumps
+   - Transform the data into star schema
+   - Make a separate table for the variables
+   - Make a separate table for the events
+   - Make a separate table for the pumps
+   - Show tables summaries
+4. [ ] Netflix Prize data
+   - Get the data for Netlix Prize
+   - Transform the long form into a contingency matrix
+   - Remove the empty rows and columns
+   - Remove rows and columns with less than 5 elements
+   - Convert the matrix into long form
+   - Get metadata for each movie in a separate table
+   - Make the metadata table in long form
+* TODO Implementation [0%] [0/3]
+** TODO GitHub repository 
+** TODO Package structure
+** TODO Main grammar
