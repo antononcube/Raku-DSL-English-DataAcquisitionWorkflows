@@ -30,7 +30,7 @@ zef install https://github.com/antononcube/Raku-DSL-English-DataAcquisitionWorkf
 
 # Examples
 
-Open a Raku IDE or type `raku` in the command line program. Try this Raku code:
+General recommendation request:
 
 ```perl6
 use DSL::English::DataAcquisitionWorkflows;
@@ -38,6 +38,15 @@ use DSL::English::DataAcquisitionWorkflows;
 say ToDataAcquisitionWorkflowCode(
     "what data can I get for time series investigations?;
      why did you recommend those",
+    "WL-System");
+``` 
+
+Recommendation request with subsequent filtering:
+
+```perl6
+say ToDataAcquisitionWorkflowCode(
+    "I want to investigate data that cross references good purchases with customer demographics
+     keep only datasets that can be transformed to star schema",
     "WL-System");
 ``` 
 
@@ -50,7 +59,6 @@ say ToDataAcquisitionWorkflowCode(
      what are the distributions of the numerical columns",
     "WL-System");
 ``` 
-
 
 Here is a more complicated, statistics pipeline specification:
 
@@ -81,6 +89,6 @@ say ToDataAcquisitionWorkflowCode(
 [GitHub/antononcube](https://github.com/antononcube).
 
 [AAr2] Anton Antonov,
-[DSL::Entity::Metadata Raku package](https://github.com/antononcube/Raku-DSL-Entity-English-Metadata),
+[DSL::Entity::Metadata Raku package](https://github.com/antononcube/Raku-DSL-Entity-Metadata),
 (2021),
 [GitHub/antononcube](https://github.com/antononcube).
