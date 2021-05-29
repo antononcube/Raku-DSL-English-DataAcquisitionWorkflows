@@ -14,7 +14,7 @@
     - Quality
     - Missing data
   - Distributions
-- Ranomly generated
+- Randomly generated
   - Properties
   - Variable relationships
 ** Data manipulation
