@@ -67,7 +67,8 @@ say ToDataAcquisitionWorkflowCode(
     "how many people used customer service data last month;
      what is the breakdown of data sources over data types;
      where textual data is utilized the most;
-     plot the results;", "R-tidyverse")
+     plot the results;", 
+    "R-tidyverse")
 ```
 
 Here is a recommendation specification (by collaborative filtering):
@@ -76,8 +77,22 @@ Here is a recommendation specification (by collaborative filtering):
 say ToDataAcquisitionWorkflowCode(
     "what data people like me acquired last month;
      which of those I can use for classfier investigations;
-     show me the data sizes and metadata;", "WL-System")
+     show me the data sizes and metadata;", 
+    "WL-System")
 ```
+
+------
+
+## Implementation notes
+
+The general structure of this package and its grammar (and sub-grammars) design is analogous 
+the structure and grammars of the Raku package
+[DSL::English::DataAcquisitionWorkflows](https://github.com/antononcube/Raku-DSL-English-FoodPreparationWorkflows),
+[AAr3].
+
+The original versions of the grammars were generated using Mathematica.
+See the notebook 
+["Data-Acquisition-Workflows-grammar-generation.nb"]()
 
 ------
 
@@ -90,5 +105,10 @@ say ToDataAcquisitionWorkflowCode(
 
 [AAr2] Anton Antonov,
 [DSL::Entity::Metadata Raku package](https://github.com/antononcube/Raku-DSL-Entity-Metadata),
+(2021),
+[GitHub/antononcube](https://github.com/antononcube).
+
+[AAr3] Anton Antonov,
+[DSL::English::FoodPreparationWorkflows Raku package](https://github.com/antononcube/Raku-DSL-English-FoodPreparationWorkflows),
 (2021),
 [GitHub/antononcube](https://github.com/antononcube).
