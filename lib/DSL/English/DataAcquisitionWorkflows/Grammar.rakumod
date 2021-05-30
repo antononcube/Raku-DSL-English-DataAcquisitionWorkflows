@@ -36,7 +36,9 @@ use DSL::Shared::Roles::English::PipelineCommand;
 use DSL::Shared::Roles::PredicateSpecification;
 use DSL::Shared::Roles::ErrorHandling;
 
-use DSL::English::DataAcquisitionWorkflows::Grammar::MetadataQuery;
+use DSL::Entity::Metadata::Grammar::EntityNames;
+
+use DSL::English::DataAcquisitionWorkflows::Grammar::IngredientQuery;
 use DSL::English::DataAcquisitionWorkflows::Grammar::IntrospectionQuery;
 use DSL::English::DataAcquisitionWorkflows::Grammar::RecommendationsCommand;
 use DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases;
@@ -45,24 +47,25 @@ grammar DSL::English::DataAcquisitionWorkflows::Grammar
         does DSL::Shared::Roles::English::TimeIntervalSpec
         does DSL::Shared::Roles::English::PipelineCommand
         does DSL::Shared::Roles::ErrorHandling
+        does DSL::Entity::Metadata::Grammar::EntityNames
         does DSL::English::DataAcquisitionWorkflows::Grammar::IntrospectionQuery
-        does DSL::English::DataAcquisitionWorkflows::Grammar::MetadataQuery
+        does DSL::English::DataAcquisitionWorkflows::Grammar::IngredientQuery
         does DSL::English::DataAcquisitionWorkflows::Grammar::RecommendationsCommand
         does DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases {
 
     # TOPa
     rule TOP {
         <pipeline-command> ||
-        <metadata-query-command> ||
         <introspection-query-command> ||
+        <ingredient-query-command> ||
         <recommendations-by-profile-command> ||
         <recommendations-command> ||
         <data-entity-command>
     }
 
-    rule want-data-entity-command { 'i' 'want' [ 'to' 'use' ]? <data-type-name> }
+    rule want-data-entity-command { 'i' 'want' [ 'to' 'use' ]? <entity-dataset-name> }
 
-    rule data-entity-command { <data-entity-name> }
+    rule data-entity-command { <entity-metadata-name> }
 
 }
 
