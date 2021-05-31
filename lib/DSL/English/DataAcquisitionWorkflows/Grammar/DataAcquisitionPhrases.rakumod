@@ -92,6 +92,11 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
         <a-determiner>? <few-data-acqui-word> |
         <several-data-acqui-word> }
 
+    rule analysis-phrase {
+        <analysis-data-acqui-word> |
+        <examination-data-acqui-word> |
+        <examinations-data-acqui-word> }
+
     rule analyze-phrase {
         <analyze-data-acqui-word> |
         <prepare-data-acqui-word> |
@@ -143,11 +148,12 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
 
     ##-------------------------------------------------------
     ## General tokens
-    token acquire-data-acqui-word { :i 'acquire' | ([\w]+) <?{ $0.Str ne 'acquiring' and is-fuzzy-match( $0.Str, 'acquire') }> }
-    token acquired-data-acqui-word {  :i 'acquired' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'acquired') }>}
-    token acquiring-data-acqui-word { :i 'acquiring' | ([\w]+) <?{ $0.Str ne 'acquire' and is-fuzzy-match( $0.Str, 'acquiring') }> }
+    token acquire-data-acqui-word { :i 'acquire' | ([\w]+) <?{ $0.Str !(elem) <acquiring acquired> and is-fuzzy-match( $0.Str, 'acquire') }> }
+    token acquired-data-acqui-word {  :i 'acquired' | ([\w]+) <?{ $0.Str !(elem) <acquire acquiring> and is-fuzzy-match( $0.Str, 'acquired') }>}
+    token acquiring-data-acqui-word { :i 'acquiring' | ([\w]+) <?{ $0.Str !(elem) <acquire acquired> and is-fuzzy-match( $0.Str, 'acquiring') }> }
     token acquisition-data-acqui-word {  :i 'acquisition' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'acquisition') }> }
     token am-data-acqui-word { :i 'am' }
+    token analysis-data-acqui-word { :i 'analysis' | ([\w]+) <?{ $0.Str !(elem) <analyze analyzed analyzing> and is-fuzzy-match( $0.Str, 'analysis') }> }
     token analyze-data-acqui-word { :i 'analyze' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'analyze', 1) }> }
     token analyzed-data-acqui-word { :i 'analyzed' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'analyzed') }> }
     token analyzing-data-acqui-word { :i 'analyzing' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'analyzing') }> }
@@ -160,6 +166,8 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
     token did-data-acqui-word { :i 'did' }
     token do-data-acqui-word { :i 'do' }
     token element-data-acqui-word { :i 'element' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'element') }> }
+    token examination-data-acqui-word { :i 'examination' | ([\w]+) <?{ $0.Str !(elem) <examinations> and is-fuzzy-match( $0.Str, 'examination') }> }
+    token examinations-data-acqui-word { :i 'examinations' | ([\w]+) <?{ $0.Str !(elem) <examination> and is-fuzzy-match( $0.Str, 'examinations') }> }
     token experiment-data-acqui-word { :i 'experiment' | ([\w]+) <?{ $0.Str !(elem) <experimented experimenting> and is-fuzzy-match( $0.Str, 'experiment') }> }
     token experimented-data-acqui-word { :i 'experimented' | ([\w]+) <?{ $0.Str !(elem) <experiment experimenting> and is-fuzzy-match( $0.Str, 'experimented') }> }
     token experimenting-data-acqui-word { :i 'experimenting' | ([\w]+) <?{ $0.Str !(elem) <experiment experimenting> and is-fuzzy-match( $0.Str, 'experimenting') }> }
