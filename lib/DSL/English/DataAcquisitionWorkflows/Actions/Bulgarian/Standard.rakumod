@@ -142,9 +142,11 @@ class DSL::English::DataAcquisitionWorkflows::Actions::Bulgarian::Standard
     ## Recommendations
     ##=====================================================
     method recommendations-command($/) {
-        with $<analyze-phrase> {
+        if $<analyze-phrase> && $<recipe-phrase> {
             make 'Препоръчай рецепти за анализ' ~ ($.userID.chars > 0 ?? ' за потребителя ' ~ self.makeUserIDTag() !! '')
-        } orwith $<recipe-phrase> {
+        } elsif $<analyze-phrase> {
+            make 'Препоръчай данни за анализ' ~ ($.userID.chars > 0 ?? ' за потребителя ' ~ self.makeUserIDTag() !! '')
+        } elsif $<recipe-phrase> {
             make 'Препоръчай рецепти за подготвяне' ~ ($.userID.chars > 0 ?? ' за потребителя ' ~ self.makeUserIDTag() !! '')
         } else {
             make 'Препоръчай сурови или подготевени данни ' ~ ($.userID.chars > 0 ?? ' за потребителя ' ~ self.makeUserIDTag() !! '')
@@ -157,8 +159,8 @@ class DSL::English::DataAcquisitionWorkflows::Actions::Bulgarian::Standard
     method recommendations-by-profile-command($/) {
         my Str @resProfile;
 
-        if $<food-quality-spec> {
-             @resProfile.append($<food-quality-spec>.made)
+        if $<data-quality-spec> {
+             @resProfile.append($<data-quality-spec>.made)
         }
 
         if $<period-acquisition-spec> {
@@ -167,6 +169,10 @@ class DSL::English::DataAcquisitionWorkflows::Actions::Bulgarian::Standard
 
         if $<mixed-data-spec-list> {
              @resProfile.append($<mixed-data-spec-list>.made)
+        }
+
+        if $<ingredient-spec-list> {
+             @resProfile.append($<ingredient-spec-list>.made)
         }
 
         if self.makeUserIDTag().chars > 0 {
@@ -191,20 +197,24 @@ class DSL::English::DataAcquisitionWorkflows::Actions::Bulgarian::Standard
         make 'Източникът на данни е "' ~ $/.values[0].made ~ '"';
     }
 
-    method period-meal-spec($/) {
+    method period-acquisition-spec($/) {
         make 'Времето на трансформиране е "' ~ $/.Str.trim.lc ~ '"';
     }
 
-    method period-acquisition-spec($/) {
-        make $/.values>>.made.flat;
+    method period-spec($/) {
+        make $/.Str.lc;
     }
 
     method data-quality-spec($/) {
-        make $/.values[0].made;
+        make 'Свойствата включват: ' ~ $/.values>>.made.join(', ');
+    }
+
+    method data-property-spec($/) {
+        make '"' ~ $/.Str.trim.lc ~ '"';
     }
 
     method ingredient-spec-list($/) {
-        make 'Свойствата включват: ' ~ $/.values>>.made.join(', ');
+        make 'Метаданните включват: ' ~ $/.values>>.made.join(', ');
     }
 
     method ingredient-spec($/) {
