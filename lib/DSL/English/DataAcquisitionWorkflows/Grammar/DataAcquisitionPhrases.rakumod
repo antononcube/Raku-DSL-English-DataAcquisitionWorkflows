@@ -34,6 +34,8 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
     token data-schema-phrase { [ <data-noun> | <dataset-noun> ]? <schema-data-acqui-word> }
     token data-schemas-phrase { [ <data-noun> | <dataset-noun> ]? <schemas-data-acqui-word> }
 
+    token acquisition-phrase { <acquisition-data-acqui-word> | <gathering-data-acqui-word> | <processing-data-acqui-word> }
+
     ##-------------------------------------------------------
     rule user-be-phrase {
         <user-spec> <user-be-verb> | <im-data-acqui-word>
@@ -137,28 +139,33 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
     rule acquiring-phrase { <acquiring-data-acqui-word> | <processing-data-acqui-word> }
 
     ##-------------------------------------------------------
+    rule star-schema-phrase { <star-data-acqui-word> <schema-data-acqui-word> }
+
+    ##-------------------------------------------------------
     ## General tokens
+    token acquire-data-acqui-word { :i 'acquire' | ([\w]+) <?{ $0.Str ne 'acquiring' and is-fuzzy-match( $0.Str, 'acquire') }> }
+    token acquired-data-acqui-word {  :i 'acquired' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'acquired') }>}
+    token acquiring-data-acqui-word { :i 'acquiring' | ([\w]+) <?{ $0.Str ne 'acquire' and is-fuzzy-match( $0.Str, 'acquiring') }> }
+    token acquisition-data-acqui-word {  :i 'acquisition' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'acquisition') }> }
     token am-data-acqui-word { :i 'am' }
-    token are-data-acqui-word { :i 'are' }
-    token acquired-data-acqui-word { :i 'acquired' }
-    token can-data-acqui-word { :i 'can' }
-    token component-data-acqui-word { :i 'component' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'component') }> }
-    token contain-data-acqui-word { :i 'contain' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'contain') }> }
     token analyze-data-acqui-word { :i 'analyze' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'analyze', 1) }> }
     token analyzed-data-acqui-word { :i 'analyzed' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'analyzed') }> }
     token analyzing-data-acqui-word { :i 'analyzing' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'analyzing') }> }
-    token did-data-acqui-word { :i 'did' }
+    token are-data-acqui-word { :i 'are' }
+    token can-data-acqui-word { :i 'can' }
+    token component-data-acqui-word { :i 'component' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'component') }> }
+    token contain-data-acqui-word { :i 'contain' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'contain') }> }
     token data-frame-data-acqui-word { :i <data-frame> }
     token data-frames-data-acqui-word { :i <data-frames> }
+    token did-data-acqui-word { :i 'did' }
     token do-data-acqui-word { :i 'do' }
-    token acquire-data-acqui-word { :i 'acquire' | ([\w]+) <?{ $0.Str ne 'acquiring' and is-fuzzy-match( $0.Str, 'acquire') }> }
-    token acquiring-data-acqui-word { :i 'acquiring' | ([\w]+) <?{ $0.Str ne 'acquire' and is-fuzzy-match( $0.Str, 'acquiring') }> }
     token element-data-acqui-word { :i 'element' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'element') }> }
     token experiment-data-acqui-word { :i 'experiment' | ([\w]+) <?{ $0.Str !(elem) <experimented experimenting> and is-fuzzy-match( $0.Str, 'experiment') }> }
     token experimented-data-acqui-word { :i 'experimented' | ([\w]+) <?{ $0.Str !(elem) <experiment experimenting> and is-fuzzy-match( $0.Str, 'experimented') }> }
     token experimenting-data-acqui-word { :i 'experimenting' | ([\w]+) <?{ $0.Str !(elem) <experiment experimenting> and is-fuzzy-match( $0.Str, 'experimenting') }> }
     token feeling-data-acqui-word { :i 'feeling' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'feeling') }> }
     token few-data-acqui-word { :i 'few' | ([\w]+) <?{ $0.Str ne 'new' and is-fuzzy-match( $0.Str, 'few', 1) }> }
+    token gathering-data-acqui-word {  :i 'gathering' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'gathering') }> }
     token got-data-acqui-word { :i 'got' }
     token had-data-acqui-word { :i 'had' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'had', 1) }> }
     token have-data-acqui-word { :i 'have' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'have', 1) }> }
@@ -176,9 +183,9 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
     token make-data-acqui-word { :i 'make' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'make', 1) }> }
     token many-data-acqui-word { :i 'many' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'many', 1) }> }
     token me-data-acqui-word { :i 'me' }
-    token my-data-acqui-word { :i 'my' }
     token mood-data-acqui-word { :i 'mood' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'mood', 1) }> }
     token most-data-acqui-word { :i 'most' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'most', 1) }> }
+    token my-data-acqui-word { :i 'my' }
     token new-data-acqui-word { :i 'new' | ([\w]+) <?{ $0.Str ne 'few' and is-fuzzy-match( $0.Str, 'new', 1) }> }
     token number-data-acqui-word { :i 'number' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'number') }> }
     token often-data-acqui-word { :i 'often' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'often') }> }
@@ -195,13 +202,14 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
     token recipes-data-acqui-word { :i 'recipes' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'recipes') }> }
     token recommend-data-acqui-word { :i 'recommend' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'recommend') }> }
     token recommendations-data-acqui-word { :i 'recommendations' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'recommendations') }> }
-    token several-data-acqui-word { :i 'several' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'several') }> }
     token schema-data-acqui-word { :i 'schema' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'schema') }> }
     token schemas-data-acqui-word { :i 'schemas' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'schemas') }> }
+    token several-data-acqui-word { :i 'several' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'several') }> }
     token show-data-acqui-word { :i 'show' | ([\w]+) <?{ $0.Str ne 'how' and is-fuzzy-match( $0.Str, 'show', 1) }> }
     token some-data-acqui-word { :i 'some' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'some', 1) }> }
     token something-data-acqui-word { :i 'something' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'something') }> }
     token source-data-acqui-word { :i 'source' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'source') }> }
+    token star-data-acqui-word { :i 'star' | ([\w]+) <?{ $0.Str ne 'start' and is-fuzzy-match( $0.Str, 'star', 1) }> }
     token suggest-data-acqui-word { :i 'suggest' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'suggest') }> }
     token suggestions-data-acqui-word { :i 'suggestions' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'suggestions') }> }
     token tell-data-acqui-word { :i 'tell' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'tell', 1) }> }
