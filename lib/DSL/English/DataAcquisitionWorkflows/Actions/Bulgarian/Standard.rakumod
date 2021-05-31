@@ -213,6 +213,10 @@ class DSL::English::DataAcquisitionWorkflows::Actions::Bulgarian::Standard
         make '"' ~ $/.Str.trim.lc ~ '"';
     }
 
+    method data-non-property-spec($/) {
+        make 'без "' ~ $/.Str.trim.lc ~ '"';
+    }
+
     method ingredient-spec-list($/) {
         make 'Метаданните включват: ' ~ $/.values>>.made.join(', ');
     }
