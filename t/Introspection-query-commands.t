@@ -60,24 +60,24 @@ ok $pCOMMAND.parse('show timeline of when I data analyzed'.lc),
         'show timeline of when I data analyzed';
 
 ## 13
-ok $pCOMMAND.parse('what data did we analuzed between march and april'.lc),
-        'what data did we analuzed between march and april';
+ok $pCOMMAND.parse('what data did we analyze between march and april'.lc),
+        'what data did we analyze between march and april';
 
 ## 14
-ok $pCOMMAND.parse('what datasets did I prepared from jan to april'.lc),
-        'what datasets did I prepared from jan to april';
+ok $pCOMMAND.parse('what datasets did I prepare from jan to april'.lc),
+        'what datasets did I prepare from jan to april';
 
 ## 15
-ok $pCOMMAND.parse('what did I acquired from jan to may'.lc),
-        'what did I acquired from jan to may';
+ok $pCOMMAND.parse('what did I acquire from jan to may'.lc),
+        'what did I acquire from jan to may';
 
 ## 16
 ok $pCOMMAND.parse('what did I acquire from jan to may'.lc),
         'what did I acquire from jan to may';
 
 ## 17
-ok $pCOMMAND.parse('what did I analyzed last year'.lc),
-        'what did I analyzed last year';
+ok $pCOMMAND.parse('what did I analyze last year'.lc),
+        'what did I analyze last year';
 
 ## 18
 ok $pCOMMAND.parse('what did I analyze from jan to april'.lc),
