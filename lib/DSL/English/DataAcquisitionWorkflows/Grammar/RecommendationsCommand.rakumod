@@ -17,19 +17,19 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::RecommendationsCommand {
         <.user-be-phrase> <.in-preposition> <.the-determiner> <.mood-data-acqui-word> <.for-preposition> <.a-determiner> <snack-data-acqui-word> |
         <user-spec> <.want-data-acqui-word> [ <.to-preposition> [ <.acquire-data-acqui-word>  | <.try-data-acqui-word> <.out-adverb>? ] ]? [
            <.a-determiner>? <mixed-data-spec-list> <period-acquisition-spec>? |
-           <something-data-acqui-word> <.from-preposition>? [ <data-source-spec> | <data-quality-spec> ] [ [ <.for-preposition> | <.at-preposition> | <.during-preposition> ] <period-acquisition-spec> ]? |
+           <something-data-acqui-word> <.from-preposition>? [ <data-source-spec> | <data-with-quality-spec-list> ] [ [ <.for-preposition> | <.at-preposition> | <.during-preposition> ] <period-acquisition-spec> ]? |
            <period-acquisition-spec> <.from-preposition>? <data-source-spec> ] |
         [ <recommend-phrase> | <tell-data-acqui-word>  | <show-data-acqui-word> ] <.me-data-acqui-word>? <.a-determiner>? <.few-data-acqui-word>? [
            <item-of-data-phrase> <.from-preposition> <data-source-spec> |
            [ <recipe-phrase> | <item-of-data-phrase> ] [
               <.from-preposition> <data-source-spec> |
               <.with-preposition> <ingredient-spec-list> ] |
-           <data-quality-spec> <recipe-phrase> |
+           <data-with-quality-spec-list> <recipe-phrase> |
            <some-data-acqui-word>? [ <ingredient-spec-list> || <mixed-data-spec-list> ] [ <recipe-data-acqui-word> | <item-of-data-phrase> <.recommendations-phrase>? | <recommendations-phrase> ] |
-           <something-data-acqui-word> <.with-preposition>? <data-quality-spec> |
+           <something-data-acqui-word> <.with-preposition>? <data-with-quality-spec-list> |
            <period-spec> <.item-of-data-phrase> |
            <new-data-acqui-word> <recipe-data-acqui-word> |
-           <.some-data-acqui-word>? <interesting-data-acqui-word> [ <data-quality-spec> [ <dataset-phrase> | <acquisition-phrase> ]? ]? <recipe-phrase>? |
+           <.some-data-acqui-word>? <interesting-data-acqui-word> [ <data-with-quality-spec-list> [ <dataset-phrase> | <acquisition-phrase> ]? ]? <recipe-phrase>? |
            <ingredient-spec-list> <item-of-data-phrase> <.recommendations-phrase> |
            <non-prefix> <data-source-spec> <recipe-phrase> |
            <.some-data-acqui-word>? <interesting-data-acqui-word> <data-source-spec> <recipe-phrase> ]
