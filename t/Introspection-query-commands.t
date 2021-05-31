@@ -16,8 +16,8 @@ ok $pCOMMAND.parse('how many times I acquired hierarchical data in the last thre
         'how many times I acquired hierarchical data in the last three months';
 
 ## 2
-ok $pCOMMAND.parse('How many times I acquired human anatomy last year'.lc),
-        'How many times I acquired human anatomy last year';
+ok $pCOMMAND.parse('How many times I acquired anatomical structure data last year'.lc),
+        'How many times I acquired anatomical structure data last year';
 
 ## 3
 ok $pCOMMAND.parse('how many times I acquired TV data last year'.lc),
