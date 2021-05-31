@@ -95,3 +95,27 @@
 ** TODO Recommendations by history
 ** TODO Recommendations by profile
 ** TODO Introspection grammar
+** Leverage analogy with DSL::English::FoodPreparationWorkflows
+- Consider the following mapping / replacements:
+  | Action   | FoodPreparationWorkflows   | DataAcquisitionWorkflows  |
+  |----------+----------------------------+---------------------------|
+  |          | <ate-phrase>               | <acquired-phrase>         |
+  |          | <cook-phrase>              | <analyze-phrase>          |
+  |          | <cooked-phrase>            | <analyzed-phrase>         |
+  |          | <cooking-phrase>           | <analyzing-phrase>        |
+  |          | <course-phrase>            | <dataset-phrase>          |
+  |          | <dish-phrase>              | <data-schema-phrase>      |
+  |          | <eat-phrase>               | <acquire-phrase>          |
+  |          | <eating-phrase>            | <acquiring-phrase>        |
+  |          | <food-cuisine-spec>        | <data-source-spec>        |
+  |          | <food-quality-spec>        | <data-quality-spec        |
+  |          | <food-quality-spec>        | <data-quality-spec>       |
+  |          | <item-of-food-phrase>      | <item-of-data-phrase>     |
+  |          | <mixed-food-spec-list>     | <mixed-data-spec-list>    |
+  |          | <period-meal-spec>         | <period-acquisition-spec> |
+  |          | <sous-chef-spec>           | <data-acquirer-spec>      |
+  |          | <to-eat-phrase>            | <to-acquire-phrase>       |
+  | redefine | <ingredient-spec>          |                           |
+  | remove   | <allergic-reaction-phrase> |                           |
+
+ 
