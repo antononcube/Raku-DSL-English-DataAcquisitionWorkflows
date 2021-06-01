@@ -6,7 +6,7 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::RecommendationsCommand {
         <.can-data-acqui-word> <.data-acquirer-spec> <.recommend-phrase> <.item-of-data-phrase> <.with-preposition> <ingredient-spec-list> |
         [ <.recommend-phrase> | <.what-pronoun> ]
           [ <several-phrase> || <a-determiner> || <the-determiner> ]?
-          [ <.something-data-acqui-word> | <.some-determiner>? <.item-of-data-phrase> | <recipe-phrase> ]?
+          [ <.something-data-acqui-word> | <.some-determiner>? <.item-of-data-phrase> | <.item-of-data-phrase>? <recipe-phrase> ]?
           [ <.to-preposition> [ <analyze-phrase> | <acquire-phrase> ] ]?
           [ <.for-preposition> <.the-determiner>? [ <period-spec> | <period-acquisition-spec> ] ]?
     }
@@ -25,10 +25,10 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::RecommendationsCommand {
               <.from-preposition> <data-source-spec> |
               <.with-preposition> <ingredient-spec-list> ] |
            <data-with-quality-spec-list> <recipe-phrase> |
-           <some-data-acqui-word>? [ <ingredient-spec-list> || <mixed-data-spec-list> ] [ <recipe-data-acqui-word> | <item-of-data-phrase> <.recommendations-phrase>? | <recommendations-phrase> ] |
+           <some-data-acqui-word>? [ <ingredient-spec-list> || <mixed-data-spec-list> ] [ <item-of-data-recipe-phrase> | <item-of-data-phrase> <.recommendations-phrase>? | <recommendations-phrase> ] |
            <something-data-acqui-word> <.with-preposition>? <data-with-quality-spec-list> |
            <period-spec> <.item-of-data-phrase> |
-           <new-data-acqui-word> <recipe-data-acqui-word> |
+           <new-data-acqui-word> <item-of-data-recipe-phrase> |
            <.some-data-acqui-word>? <interesting-data-acqui-word> [ <data-with-quality-spec-list> [ <dataset-phrase> | <acquisition-phrase> ]? ]? <recipe-phrase>? |
            <ingredient-spec-list> <item-of-data-phrase> <.recommendations-phrase> |
            <non-prefix> <data-source-spec> <recipe-phrase> |
