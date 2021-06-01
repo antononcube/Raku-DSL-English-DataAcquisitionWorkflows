@@ -11,7 +11,7 @@ my $pCOMMAND = DSL::English::DataAcquisitionWorkflows::Grammar;
 ## The list of tests here is for illustration purposes.
 ## The list is made of small samples of more dedicated tests.
 
-plan 9;
+plan 10;
 
 ## 1
 ok $pCOMMAND.parse('how many datasets have bus stop data'.lc),
@@ -42,10 +42,14 @@ ok $pCOMMAND.parse('what do i analyze during easter'.lc),
         'what do i analyze during easter';
 
 ## 8
-ok $pCOMMAND.parse('what do i transform each month'.lc),
-        'what do i transform each month';
+ok $pCOMMAND.parse('what did i acquire last year'.lc),
+        'what did i acquire last year';
 
 ## 9
+ok $pCOMMAND.parse('what do i acquire each month'.lc),
+        'what do i acquire each month';
+
+## 10
 ok $pCOMMAND.parse('what number of datasets have anatomical structure variables'.lc),
         'what number of datasets have anatomical structure variables';
 
