@@ -30,8 +30,10 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::IngredientQuery
     rule do-you-know-to-have-phrase { <do-you-know-phrase>? <to-preposition>? <have-phrase> }
 
     rule ingredient-query-body {
-        <item-of-data-phrase> <.have-phrase> <.the-determiner>? <.ingredients-phrase>? <ingredient-spec-list>    |
-        <recipes-data-acqui-word> <.do-you-know-to-have-phrase> <.the-determiner>? <.ingredients-phrase>? <ingredient-spec-list>    |
-        <data-frames-data-acqui-word> <.do-you-know-to-have-phrase> <.the-determiner>? <.ingredients-phrase>? <ingredient-spec-list>
+        <item-of-data-phrase> <.have-phrase> [ <.a-determiner> | <.the-determiner> ]? <.ingredients-phrase>? <ingredient-query-main-part> |
+        <recipes-data-acqui-word> <.do-you-know-to-have-phrase> [ <.a-determiner> | <.the-determiner> ]? <.ingredients-phrase>? <ingredient-query-main-part> |
+        <data-frames-data-acqui-word> <.do-you-know-to-have-phrase> [ <.a-determiner> | <.the-determiner> ]? <.ingredients-phrase>? <ingredient-query-main-part>
     }
+
+    rule ingredient-query-main-part { <data-quality-spec-list> [ <data-noun> | <dataset-variables-phrase> ]? }
 }
