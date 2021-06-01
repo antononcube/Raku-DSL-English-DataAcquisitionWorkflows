@@ -82,9 +82,9 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
 
     ##-------------------------------------------------------
     rule mixed-data-spec-list {
-        <data-source-spec> <ingredient-spec-list> |
-        <ingredient-spec-list> <data-source-spec>? |
-        [ <data-source-spec> | <ingredient-spec-list> ]+ % <.list-separator> }
+        <data-quality-spec-list> <data-source-spec>? ||
+        <data-source-spec> <data-quality-spec-list> ||
+        [ <data-source-spec> | <data-quality-spec-list> ]+ % <.list-separator> }
 
     ##-------------------------------------------------------
     ## General rules
@@ -191,6 +191,7 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
     token make-data-acqui-word { :i 'make' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'make', 1) }> }
     token many-data-acqui-word { :i 'many' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'many', 1) }> }
     token me-data-acqui-word { :i 'me' }
+    token metadata-data-acqui-word { :i 'metadata' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'metadata') }> }
     token mood-data-acqui-word { :i 'mood' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'mood', 1) }> }
     token most-data-acqui-word { :i 'most' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'most', 1) }> }
     token my-data-acqui-word { :i 'my' }

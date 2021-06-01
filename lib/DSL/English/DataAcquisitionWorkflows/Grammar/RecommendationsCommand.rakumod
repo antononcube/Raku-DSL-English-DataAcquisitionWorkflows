@@ -16,7 +16,7 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::RecommendationsCommand {
         <.user-be-phrase> <.sick-data-acqui-word> <.what-data-acqui-word> <.do-verb> <user-spec> <.analyze-phrase> |
         <.user-be-phrase> <.in-preposition> <.the-determiner> <.mood-data-acqui-word> <.for-preposition> <.a-determiner> <snack-data-acqui-word> |
         <user-spec> <.want-data-acqui-word> [ <.to-preposition> [ <.acquire-data-acqui-word>  | <.try-data-acqui-word> <.out-adverb>? ] ]? [
-           <.a-determiner>? <mixed-data-spec-list> <period-acquisition-spec>? |
+           <.a-determiner>? <mixed-data-spec-list> <.dataset-phrase>? <period-acquisition-spec>? |
            <something-data-acqui-word> <.from-preposition>? [ <data-source-spec> | <data-with-quality-spec-list> ] [ [ <.for-preposition> | <.at-preposition> | <.during-preposition> ] <period-acquisition-spec> ]? |
            <period-acquisition-spec> <.from-preposition>? <data-source-spec> ] |
         [ <recommend-phrase> | <tell-data-acqui-word>  | <show-data-acqui-word> ] <.me-data-acqui-word>? <.a-determiner>? <.few-data-acqui-word>? [
