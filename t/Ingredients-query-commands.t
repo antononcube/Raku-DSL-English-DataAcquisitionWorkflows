@@ -60,12 +60,12 @@ ok $pCOMMAND.parse('what number of datasets have bus station data'.lc),
 'what number of datasets have bus station data';
 
 ## 13
-ok $pCOMMAND.parse('what number of datasets have protein'.lc),
-'what number of datasets have protein';
+ok $pCOMMAND.parse('what number of datasets have business event'.lc),
+'what number of datasets have business event';
 
 ## 14
-ok $pCOMMAND.parse('what number of datasets have tunel data'.lc),
-'what number of datasets have tunel data';
+ok $pCOMMAND.parse('what number of datasets have bus stop data'.lc),
+'what number of datasets have bus stop data';
 
 ## 15
 ok $pCOMMAND.parse('which datasets have a animal shelter column'.lc),
@@ -80,7 +80,7 @@ ok $pCOMMAND.parse('which datasets have the variables representing medical condi
 'which datasets have the variables representing medical condition and employment agency';
 
 ## 18
-ok $pCOMMAND.parse('which datasets have the variables that are both categorical and numerical'.lc),
-'which datasets have the variables that are both categorical and numerical';
+ok $pCOMMAND.parse('which datasets have variables that are both categorical and numerical'.lc),
+'which datasets have variables that are both categorical and numerical';
 
 done-testing;
