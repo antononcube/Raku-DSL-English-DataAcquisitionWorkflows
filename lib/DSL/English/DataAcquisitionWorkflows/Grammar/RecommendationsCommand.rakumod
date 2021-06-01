@@ -23,9 +23,9 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::RecommendationsCommand {
            <item-of-data-phrase> <.from-preposition> <data-source-spec> |
            [ <recipe-phrase> | <item-of-data-phrase> ] [
               <.from-preposition> <data-source-spec> |
-              <.with-preposition> <ingredient-spec-list> ] |
+              <.with-preposition> <data-with-quality-spec-list> ] |
            <data-with-quality-spec-list> <recipe-phrase> |
-           <some-data-acqui-word>? [ <ingredient-spec-list> || <mixed-data-spec-list> ] [ <item-of-data-recipe-phrase> | <item-of-data-phrase> <.recommendations-phrase>? | <recommendations-phrase> ] |
+           <some-data-acqui-word>? [ <data-with-quality-spec-list> || <mixed-data-spec-list> ] [ <item-of-data-recipe-phrase> | <item-of-data-phrase> <.recommendations-phrase>? | <recommendations-phrase> ] |
            <something-data-acqui-word> <.with-preposition>? <data-with-quality-spec-list> |
            <period-spec> <.item-of-data-phrase> |
            <new-data-acqui-word> <item-of-data-recipe-phrase> |
