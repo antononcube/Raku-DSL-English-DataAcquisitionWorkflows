@@ -24,6 +24,10 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
         <recipe-data-acqui-word> | <recipes-data-acqui-word>
     }
 
+    rule item-of-data-recipe-phrase {
+        <item-of-data-phrase>? <recipe-phrase>
+    }
+
     ##-------------------------------------------------------
     rule item-of-data-phrase {
         <data-schema-phrase> || <dataset-phrase>
@@ -145,6 +149,8 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
 
     ##-------------------------------------------------------
     rule star-schema-phrase { <star-data-acqui-word> <schema-data-acqui-word> }
+
+    rule dataset-variables-phrase { <dataset-phrase>? [ <variable-noun> | <variables-noun> | <column-noun> | <columns> ] }
 
     ##-------------------------------------------------------
     ## General tokens
