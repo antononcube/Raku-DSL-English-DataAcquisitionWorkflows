@@ -21,7 +21,7 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::IntrospectionQuery {
     ## Kind of data
     rule introspection-profile-query {
         <.what-pronoun> <.kind-of-data-phrase>? [ <.do-verb> | <.did-data-acqui-word> ] <user-spec> <introspection-action>
-           [ [ <.for-preposition> | <.at-preposition> | <.during-preposition> | <.in-preposition> ] <period-spec> <period-acquisition-spec>? | <time-interval-spec> ] |
+           [ [ <for-preposition> | <at-preposition> | <during-preposition> | <in-preposition> ] <period-spec> <period-acquisition-spec>? | <time-interval-spec> ] |
         <.what-pronoun> <.kind-of-phrase>? <data-with-quality-spec> <user-spec> <introspection-action> <.most-data-acqui-word> <.often-data-acqui-word>
     }
 
