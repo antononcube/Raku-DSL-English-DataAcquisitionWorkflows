@@ -24,18 +24,18 @@ ok ToDataAcquisitionWorkflowCode('USER ID 787_89.jjd-88; I want to acquire local
 ok ToDataAcquisitionWorkflowCode('USER ID mamaJioe94; recommend datasets to analyze'),
         'USER ID mamaJioe94; recommend datasets to analyze';
 
-like ToDataAcquisitionWorkflowCode('USER ID mamaJioe94; recommend dishes to analyze'), / .* 'UserID:mamaJioe94' .* /;
+like ToDataAcquisitionWorkflowCode('USER ID mamaJioe94; recommend datasets to analyze'), / .* 'UserID:mamaJioe94' .* /;
 
-unlike ToDataAcquisitionWorkflowCode('USER ID NONE; recommend dishes to analyze'), / .* 'UserID' .* /;
+unlike ToDataAcquisitionWorkflowCode('USER ID NONE; recommend datasets to analyze'), / .* 'UserID' .* /;
 
-unlike ToDataAcquisitionWorkflowCode('USER ID NULL; recommend dishes to analyze'), / .* 'UserID' .* /;
+unlike ToDataAcquisitionWorkflowCode('USER ID NULL; recommend datasets to analyze'), / .* 'UserID' .* /;
 
-like ToDataAcquisitionWorkflowCode('USER ID marekGram88; recommend dishes to analyze', userID => 'harzaGa22' ), / .* 'UserID:marekGram88' .* /;
+like ToDataAcquisitionWorkflowCode('USER ID marekGram88; recommend datasets to analyze', userID => 'harzaGa22' ), / .* 'UserID:marekGram88' .* /;
 
-unlike ToDataAcquisitionWorkflowCode('USER ID marekGram88; recommend dishes to analyze', userID => 'harzaGa22' ), / .* 'UserID:harzaGa22' .* /;
+unlike ToDataAcquisitionWorkflowCode('USER ID marekGram88; recommend datasets to analyze', userID => 'harzaGa22' ), / .* 'UserID:harzaGa22' .* /;
 
-like ToDataAcquisitionWorkflowCode('USER ID NONE; recommend dishes to analyze', userID => 'harzaGa22' ), / .* 'UserID:harzaGa22' .* /;
+like ToDataAcquisitionWorkflowCode('USER ID NONE; recommend datasets to analyze', userID => 'harzaGa22' ), / .* 'UserID:harzaGa22' .* /;
 
-like ToDataAcquisitionWorkflowCode('USER ID NULL; recommend dishes to analyze', userID => 'harzaGa22' ), / .* 'UserID:harzaGa22' .* /;
+like ToDataAcquisitionWorkflowCode('USER ID NULL; recommend datasets to analyze', userID => 'harzaGa22' ), / .* 'UserID:harzaGa22' .* /;
 
 done-testing;
