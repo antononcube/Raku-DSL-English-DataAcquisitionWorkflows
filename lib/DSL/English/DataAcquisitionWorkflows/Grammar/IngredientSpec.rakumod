@@ -5,11 +5,11 @@ use DSL::Shared::Roles::English::PipelineCommand;
 role DSL::English::DataAcquisitionWorkflows::Grammar::IngredientSpec
         does DSL::Shared::Roles::English::PipelineCommand {
 
-    rule data-with-quality-spec-list { <data-with-quality-spec>+ % <.list-separator> }
+    rule data-with-quality-spec-list { <.both-determiner>? <data-with-quality-spec>+ % <.list-separator> }
 
     rule data-with-quality-spec { <data-quality-spec-list> <.item-of-data-phrase>? }
 
-    rule data-quality-spec-list { <data-quality-spec>+ % <.list-separator> }
+    rule data-quality-spec-list { <.both-determiner>? <data-quality-spec>+ % <.list-separator> }
 
     rule data-quality-spec { <data-non-property-spec> || <data-property-spec> || <ingredient-spec> }
 
