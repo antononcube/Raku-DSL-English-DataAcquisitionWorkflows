@@ -135,7 +135,7 @@
   |          | <to-eat-phrase>            | <to-acquire-phrase>       |
   | redefine | <ingredient-spec>          |                           |
   | remove   | <allergic-reaction-phrase> |                           |
-** TODO Unit tests [77%] [7/9]
+** TODO Unit tests [66%] [6/9]
 *** General
 - The test files reused and modified from
   [[https://github.com/antononcube/Raku-DSL-English-FoodPreparationWorkflows][DSL::English::FoodPreparationWorkflows]] are marked with *FPW*.
@@ -143,11 +143,23 @@
 - Made a Mathematica notebook that:
   - Imports phrases from sources FPW
   - Generate Raku tests code
-*** DONE Ingredients query commands                                   :FPW:
-*** DONE Introspection query commands                                 :FPW:
-*** DONE Recommendations by profile commands                          :FPW:
-*** DONE Recommendations commands                                     :FPW:
-*** DONE Sanity check tests                                           :FPW:
-*** DONE User-ID-specs-handling                                       :FPW:
-*** TODO Data quality commands
-*** TODO Random data generation commands
+*** TODO Ingredients query commands [50%] [1/2]                       :FPW:
+- [X] Created
+- [ ] All tests passed
+*** DONE Introspection query commands [%] [/]                         :FPW:
+- [X] Created
+- [X] All tests passed
+*** DONE Recommendations by profile commands [%] [/]                  :FPW:
+- [X] Created
+- [X] All tests passed
+*** DONE Recommendations commands [100%] [0/0]                        :FPW:
+- [X] Created
+- [X] All tests passed
+*** DONE Sanity check tests [100%] [0/0]                              :FPW:
+- [X] Created
+- [X] All tests passed
+*** DONE User-ID-specs-handling [100%] [0/0]                          :FPW:
+- [X] Created
+- [X] All tests passed
+*** TODO Data quality commands [%] [/] 
+*** TODO Random data generation commands [%] [/] 
