@@ -33,10 +33,10 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
         <data-schema-phrase> || <dataset-phrase>
     }
 
-    token dataset-phrase { <data-noun> | <dataset-noun> | <datasets-noun> | <data-frame> | <data-frames> }
+    token dataset-phrase { <datasets-noun> || <dataset-noun> || <data-frames> || <data-frame> || <data-noun> }
 
-    token data-schema-phrase { [ <data-noun> | <dataset-noun> ]? <schema-data-acqui-word> }
-    token data-schemas-phrase { [ <data-noun> | <dataset-noun> ]? <schemas-data-acqui-word> }
+    rule data-schema-phrase  { [ <data-noun> | <dataset-noun> ]? <schema-data-acqui-word> }
+    rule data-schemas-phrase { [ <data-noun> | <dataset-noun> ]? <schemas-data-acqui-word> }
 
     token acquisition-phrase { <acquisition-data-acqui-word> | <gathering-data-acqui-word> | <processing-data-acqui-word> }
 
