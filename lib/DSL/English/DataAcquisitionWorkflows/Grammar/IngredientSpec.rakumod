@@ -27,6 +27,7 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::IngredientSpec
         <complete-cases-phrase> |
         <hierarchical-data-acqui-word> |
         <no-determiner> <missing-values-phrase> |
+        <nominal-data-acqui-word> |
         <numerical-data-acqui-word> |
         <star-schema-phrase> |
         <television-data-acqui-word> |
@@ -36,6 +37,7 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::IngredientSpec
     token apache-data-acqui-word { 'apache' }
     token arrow-data-acqui-word { 'arrow' }
     token categorial-data-acqui-word { 'categorical' }
+    token nominal-data-acqui-word { 'nominal' }
     token numerical-data-acqui-word { 'numerical' }
     token hierarchical-data-acqui-word { 'hierarchical' }
     token television-data-acqui-word { 'television' | 'tv' }
