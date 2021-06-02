@@ -16,7 +16,7 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
     }
 
     rule recommendations-phrase {
-        <recommendations-data-acqui-word>       | <suggestions-data-acqui-word>
+        <recommendations-data-acqui-word> | <suggestions-data-acqui-word>
     }
 
     ##-------------------------------------------------------
@@ -33,7 +33,7 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
         <data-schema-phrase> || <dataset-phrase>
     }
 
-    token dataset-phrase { <datasets-noun> || <dataset-noun> || <data-frames> || <data-frame> || <data-noun> }
+    rule dataset-phrase { <data-noun> | <datasets-noun> | <dataset-noun> | <data-frames> | <data-frame> }
 
     rule data-schema-phrase  { [ <data-noun> | <dataset-noun> ]? <schema-data-acqui-word> }
     rule data-schemas-phrase { [ <data-noun> | <dataset-noun> ]? <schemas-data-acqui-word> }
