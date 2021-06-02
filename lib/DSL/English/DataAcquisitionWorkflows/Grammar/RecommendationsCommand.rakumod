@@ -5,7 +5,7 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::RecommendationsCommand {
     rule recommendations-command {
         <.can-data-acqui-word> <.data-acquirer-spec> <.recommend-phrase> <.item-of-data-phrase> <.with-preposition> <ingredient-spec-list> |
         [ <.recommend-phrase> | <.what-pronoun> ]
-          [ <several-phrase> || <a-determiner> || <the-determiner> ]?
+          [ <several-phrase> | <a-determiner> | <the-determiner> ]?
           [ <.something-data-acqui-word> | <.some-determiner>? <.item-of-data-phrase> | <.item-of-data-phrase>? <recipe-phrase> ]?
           [ <.to-preposition> [ <analyze-phrase> | <acquire-phrase> ] ]?
           [ <.for-preposition> <.the-determiner>? [ <period-spec> | <period-acquisition-spec> ] ]?
