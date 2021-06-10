@@ -135,31 +135,59 @@
   |          | <to-eat-phrase>            | <to-acquire-phrase>       |
   | redefine | <ingredient-spec>          |                           |
   | remove   | <allergic-reaction-phrase> |                           |
-** TODO Unit tests [66%] [6/9]
-*** General
+* TODO Unit tests [66%] [6/9]
+** General
 - The test files reused and modified from
   [[https://github.com/antononcube/Raku-DSL-English-FoodPreparationWorkflows][DSL::English::FoodPreparationWorkflows]] are marked with *FPW*.
-*** DONE Tests code generation from phrases
+** DONE Tests code generation from phrases
 - Made a Mathematica notebook that:
   - Imports phrases from sources FPW
   - Generate Raku tests code
-*** TODO Ingredients query commands [50%] [1/2]                       :FPW:
+** TODO Ingredients query commands [50%] [1/2]                         :FPW:
 - [X] Created
 - [ ] All tests passed
-*** DONE Introspection query commands [%] [/]                         :FPW:
+** DONE Introspection query commands [%] [/]                           :FPW:
 - [X] Created
 - [X] All tests passed
-*** DONE Recommendations by profile commands [%] [/]                  :FPW:
+** DONE Recommendations by profile commands [%] [/]                    :FPW:
 - [X] Created
 - [X] All tests passed
-*** DONE Recommendations commands [100%] [0/0]                        :FPW:
+** DONE Recommendations commands [100%] [0/0]                          :FPW:
 - [X] Created
 - [X] All tests passed
-*** DONE Sanity check tests [100%] [0/0]                              :FPW:
+** DONE Sanity check tests [100%] [0/0]                                :FPW:
 - [X] Created
 - [X] All tests passed
-*** DONE User-ID-specs-handling [100%] [0/0]                          :FPW:
+** DONE User-ID-specs-handling [100%] [0/0]                            :FPW:
 - [X] Created
 - [X] All tests passed
-*** TODO Data quality commands [%] [/] 
-*** TODO Random data generation commands [%] [/] 
+** TODO Data quality commands [%] [/] 
+** TODO Random data generation commands [%] [/] 
+* TODO Actions [0%] [0/2]
+** TODO Mathematica [20%] [1/5]
+*** TODO Get unified metadata for WL's example datasets [83%] [5/6]
+- [X] Shape
+- [X] Data type
+- [X] Column types
+- [X] Column names
+- [X] Descriptions
+- [ ] Make a resource CSV file
+  - Most likely in long form.
+*** TODO Get unified metadata for WL's nets
+- [[https://resources.wolframcloud.com/NeuralNetRepository][WL's neural networks repository]]
+*** DONE Make datasets recommender
+*** TODO Make neural nets recommender
+*** TODO Program DAW actions
+** TODO R [20%] [1/5]
+*** TODO Get unified metadata for R example datasets [83%] [5/6]
+- [X] Shape
+- [X] Data type
+- [X] Column types
+- [X] Column names
+- [X] Descriptions
+- [ ] Make a resource CSV file
+  - Most likely in long form.
+*** TODO Get unified metadata for RStudio nets
+*** DONE Make datasets recommender
+*** TODO Make neural nets recommender
+*** TODO Program DAW actions
