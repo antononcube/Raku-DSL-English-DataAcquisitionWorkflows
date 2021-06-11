@@ -12,13 +12,22 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::RecommendationsCommand {
     }
 
     rule recommendations-by-profile-command {
+        <recommendations-by-profile-opportunistic> |
+        <recommendations-by-profile-user-wants> |
+        <recommendations-by-profile-main> }
+
+    rule recommendations-by-profile-opportunistic {
         <.can-data-acqui-word> <.data-acquirer-spec> <.recommend-phrase> <.a-determiner>? [ <data-source-spec> <.dataset-phrase> | <.dataset-phrase> <.from-preposition> <data-source-spec> ] |
         <.user-be-phrase> <.sick-data-acqui-word> <.what-data-acqui-word> <.do-verb> <user-spec> <.analyze-phrase> |
-        <.user-be-phrase> <.in-preposition> <.the-determiner> <.mood-data-acqui-word> <.for-preposition> <.a-determiner> <snack-data-acqui-word> |
-        <user-spec> <.want-data-acqui-word> [ <.to-preposition> [ <.acquire-data-acqui-word>  | <.try-data-acqui-word> <.out-adverb>? ] ]? [
-           <.a-determiner>? <mixed-data-spec-list> <.dataset-phrase>? <period-acquisition-spec>? |
+        <.user-be-phrase> <.in-preposition> <.the-determiner> <.mood-data-acqui-word> <.for-preposition> <.a-determiner> <snack-data-acqui-word> }
+
+    rule recommendations-by-profile-user-wants {
+        <user-spec> <.want-data-acqui-word> <.to-acquire-phrase>? [
+           <.a-determiner>? [ <data-quality-spec-list> | <mixed-data-spec-list> ] <.item-of-data-phrase>? <period-acquisition-spec>? |
            <something-data-acqui-word> <.from-preposition>? [ <data-source-spec> | <data-with-quality-spec-list> ] [ [ <.for-preposition> | <.at-preposition> | <.during-preposition> ] <period-acquisition-spec> ]? |
-           <period-acquisition-spec> <.from-preposition>? <data-source-spec> ] |
+           <period-acquisition-spec> <.from-preposition>? <data-source-spec> ] }
+
+    rule recommendations-by-profile-main {
         [ <recommend-phrase> | <tell-data-acqui-word>  | <show-data-acqui-word> ] <.me-data-acqui-word>? <.a-determiner>? <.few-data-acqui-word>? [
            <item-of-data-phrase> <.from-preposition> <data-source-spec> |
            [ <recipe-phrase> | <item-of-data-phrase> ] [
