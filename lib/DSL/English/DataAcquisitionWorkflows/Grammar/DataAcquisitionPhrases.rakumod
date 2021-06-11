@@ -38,7 +38,18 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
     rule data-schema-phrase  { [ <data-noun> | <dataset-noun> ]? <schema-data-acqui-word> }
     rule data-schemas-phrase { [ <data-noun> | <dataset-noun> ]? <schemas-data-acqui-word> }
 
-    token acquisition-phrase { <acquisition-data-acqui-word> | <gathering-data-acqui-word> | <processing-data-acqui-word> }
+    ##-------------------------------------------------------
+    rule data-source-spec {
+        [ <variable-name> | <local-adjective> ] [ <source-data-acqui-word> ]?
+    }
+
+    token local-adjective { :i 'local' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'local') }> }
+
+    ##-------------------------------------------------------
+    rule mixed-data-spec-list {
+        <data-quality-spec-list> <data-source-spec>? ||
+        <data-source-spec> <data-quality-spec-list> ||
+        [ <data-source-spec> | <data-quality-spec-list> ]+ % <.list-separator> }
 
     ##-------------------------------------------------------
     rule user-be-phrase {
@@ -56,13 +67,6 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
 
     token data-acquirer-name { [ <data-noun> | <dataset-noun> ] <acuirer-noun> <system-noun>? | 'das' }
     token acquirer-noun { :i 'acquirer' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'acquirer') }> }
-
-    ##-------------------------------------------------------
-    rule data-source-spec {
-        [ <variable-name> | <local-adjective> ] [ <source-data-acqui-word> ]?
-    }
-
-    token local-adjective { :i 'local' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'local') }> }
 
     ##-------------------------------------------------------
     rule period-spec {
@@ -85,13 +89,9 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
     token noon-noun { :i 'noon' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'noon') }> }
 
     ##-------------------------------------------------------
-    rule mixed-data-spec-list {
-        <data-quality-spec-list> <data-source-spec>? ||
-        <data-source-spec> <data-quality-spec-list> ||
-        [ <data-source-spec> | <data-quality-spec-list> ]+ % <.list-separator> }
-
-    ##-------------------------------------------------------
     ## General rules
+    token acquisition-phrase { <acquisition-data-acqui-word> | <gathering-data-acqui-word> | <processing-data-acqui-word> }
+
     rule several-phrase {
         <a-determiner>? <few-data-acqui-word> |
         <several-data-acqui-word> }
@@ -140,7 +140,8 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
     rule which-items-phrase { <what-data-acqui-word> | <which-determiner> }
     rule how-many-items-phrase { <what-data-acqui-word> <number-data-acqui-word> <of-preposition> | <how-data-acqui-word> <many-data-acqui-word> }
 
-    rule to-acquire-phrase { <to-preposition> <acquire-phrase> }
+    rule to-acquire-phrase { <to-preposition> [ <acquire-phrase> | <try-data-acqui-word> <out-adverb>? ] }
+
     rule acquire-phrase { <acquire-data-acqui-word> | <get-verb> | <process-data-acqui-word> }
 
     rule acquired-phrase { <acquired-data-acqui-word> | <got-data-acqui-word> | <had-data-acqui-word> | <processed-data-acqui-word>}
