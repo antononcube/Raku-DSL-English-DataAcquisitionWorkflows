@@ -17,9 +17,7 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::RecommendationsCommand {
         <recommendations-by-profile-main> }
 
     rule recommendations-by-profile-opportunistic {
-        <.can-data-acqui-word> <.data-acquirer-spec> <.recommend-phrase> <.a-determiner>? [ <data-source-spec> <.dataset-phrase> | <.dataset-phrase> <.from-preposition> <data-source-spec> ] |
-        <.user-be-phrase> <.sick-data-acqui-word> <.what-data-acqui-word> <.do-verb> <user-spec> <.analyze-phrase> |
-        <.user-be-phrase> <.in-preposition> <.the-determiner> <.mood-data-acqui-word> <.for-preposition> <.a-determiner> <snack-data-acqui-word> }
+        <.can-data-acqui-word> <.data-acquirer-spec> <.recommend-phrase> <.a-determiner>? [ <data-source-spec> <.dataset-phrase> | <.dataset-phrase> <.from-preposition> <data-source-spec> ] }
 
     rule recommendations-by-profile-user-wants {
         <user-spec> <.want-data-acqui-word> <.to-acquire-phrase>? [
