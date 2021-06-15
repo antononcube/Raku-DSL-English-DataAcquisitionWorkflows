@@ -1,8 +1,11 @@
 use v6;
 
 use DSL::Shared::Roles::English::PipelineCommand;
+use DSL::Shared::Utilities::FuzzyMatching;
+use DSL::Entity::Metadata::Grammar::EntityNames;
 
 role DSL::English::DataAcquisitionWorkflows::Grammar::IngredientSpec
+        does DSL::Entity::Metadata::Grammar::EntityNames
         does DSL::Shared::Roles::English::PipelineCommand {
 
     rule data-with-quality-spec-list { <.both-determiner>? <data-with-quality-spec>+ % <.list-separator> }
@@ -22,24 +25,12 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::IngredientSpec
     }
 
     rule data-property-spec {
+        <entity-data-type-name> |
         <apache-data-acqui-word> <arrow-data-acqui-word> |
-        <categorial-data-acqui-word> |
-        <complete-cases-phrase> |
-        <hierarchical-data-acqui-word> |
         <no-determiner> <missing-values-phrase> |
-        <nominal-data-acqui-word> |
-        <numerical-data-acqui-word> |
-        <star-schema-phrase> |
-        <television-data-acqui-word> |
-        <textual-data-acqui-word> |
-        <time-series-phrase> }
+        <television-data-acqui-word> }
 
-    token apache-data-acqui-word { 'apache' }
-    token arrow-data-acqui-word { 'arrow' }
-    token categorial-data-acqui-word { 'categorical' }
-    token nominal-data-acqui-word { 'nominal' }
-    token numerical-data-acqui-word { 'numerical' }
-    token hierarchical-data-acqui-word { 'hierarchical' }
-    token television-data-acqui-word { 'television' | 'tv' }
-    token textual-data-acqui-word { 'textual' | 'text' }
+    token apache-data-acqui-word { :i 'apache' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'apache') }> }
+    token arrow-data-acqui-word { :i 'arrow' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'arrow') }> }
+    token television-data-acqui-word { :i 'television' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'television') }> | 'tv' }
 }
