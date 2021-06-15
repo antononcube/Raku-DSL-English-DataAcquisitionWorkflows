@@ -125,6 +125,7 @@
   |          | <dish-phrase>              | <data-schema-phrase>      |
   |          | <eat-phrase>               | <acquire-phrase>          |
   |          | <eating-phrase>            | <acquiring-phrase>        |
+  |          | <entity-country-name>      | <entity-data-name>        |
   |          | <food-cuisine-spec>        | <data-source-spec>        |
   |          | <food-quality-spec>        | <data-quality-spec        |
   |          | <food-quality-spec>        | <data-quality-spec>       |
@@ -135,6 +136,8 @@
   |          | <to-eat-phrase>            | <to-acquire-phrase>       |
   | redefine | <ingredient-spec>          |                           |
   | remove   | <allergic-reaction-phrase> |                           |
+  | remove   | <entity-country-adjective> |                           |
+  | remove   | <entity-region-name>       |                           |
 * TODO Unit tests [66%] [6/9]
 ** General
 - The test files reused and modified from
@@ -164,7 +167,7 @@
 ** TODO Data quality commands [%] [/] 
 ** TODO Random data generation commands [%] [/] 
 * TODO Actions [0%] [0/2]
-** TODO Mathematica [20%] [1/5]
+** TODO Mathematica [16%] [1/6]
 *** TODO Get unified metadata for WL's example datasets [83%] [5/6]
 - [X] Shape
 - [X] Data type
@@ -177,7 +180,14 @@
 - [[https://resources.wolframcloud.com/NeuralNetRepository][WL's neural networks repository]]
 *** DONE Make datasets recommender
 *** TODO Make neural nets recommender
-*** TODO Program DAW actions
+*** TODO Program DAW actions [50%] [3/6]
+- [X] Introspection
+- [X] Recommendations
+- [X] Recommendations by profile
+- [ ] Ingredient queries
+- [ ] Random data generation
+- [ ] Data quality verification
+*** TODO Program DAW DSL notebook
 ** TODO R [20%] [1/5]
 *** TODO Get unified metadata for R example datasets [83%] [5/6]
 - [X] Shape
@@ -190,4 +200,11 @@
 *** TODO Get unified metadata for RStudio nets
 *** DONE Make datasets recommender
 *** TODO Make neural nets recommender
-*** TODO Program DAW actions
+*** TODO Program DAW actions [0%] [0/6]
+- [ ] Introspection
+- [ ] Recommendations
+- [ ] Recommendations by profile
+- [ ] Ingredient queries
+- [ ] Random data generation
+- [ ] Data quality verification
+*** TODO Program DAW DSL notebook
