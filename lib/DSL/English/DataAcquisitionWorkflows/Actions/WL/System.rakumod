@@ -65,9 +65,7 @@ class DSL::English::DataAcquisitionWorkflows::Actions::WL::System
     ## Data query
     ##=====================================================
     method data-query-command($/)  {
-        make $.Str;
-        # make 'SELECT Sum(Quantity) FROM inventory WHERE Name == ' ~ $<food-entity> ~ ' AND Location == ' ~ $<location-spec>;
-        make 'Total[dsInventory[Select[#Name == "' ~ $<food-entity> ~ '" && #Location == "' ~ $<location> ~'" &]][All,Quantity"]]';
+        die "Not implemented: data-query-command."
     }
     method location-spec($/) { make $.Str; }
 
@@ -87,19 +85,19 @@ class DSL::English::DataAcquisitionWorkflows::Actions::WL::System
             $tiPred = self.make-time-interval-predicate(%tiSpec);
         };
 
-        if $<introspection-action><analyze> or $<introspection-action><cooked> {
-            $tiPred ~= ( $tiPred.chars > 0 ?? ' && ' !! ' ') ~ '#Action == "Cook"'
+        if $<introspection-action><analyze> or $<introspection-action><analyzed> {
+            $tiPred ~= ( $tiPred.chars > 0 ?? ' && ' !! ' ') ~ '#Action == "Analyze"'
         }
 
         with $<data-source-spec> {
-            $tiPred ~= ( $tiPred.chars > 0 ?? ' && ' !! ' ') ~ 'ToLowerCase[#Cuisine] == "' ~ self.food-cuisine-spec($<data-source-spec>, :!tag).lc ~ '"'
+            $tiPred ~= ( $tiPred.chars > 0 ?? ' && ' !! ' ') ~ 'ToLowerCase[#Source] == "' ~ self.data-source-spec($<data-source-spec>, :!tag).lc ~ '"'
         }
 
         if $.userID.defined and $.userID.chars > 0 {
             my $userIDPred = '#UserID == "' ~ $.userID ~ '"';
-            make 'dsDataAcquisition[Select[' ~ $tiPred ~ ' && '~ $userIDPred ~ '&]]'
+            make 'dsDataAcquisitions[Select[' ~ $tiPred ~ ' && '~ $userIDPred ~ '&]]'
         } else {
-            make $tiPred.chars > 0 ?? 'dsDataAcquisition[Select[' ~ $tiPred ~ '&]]' !! 'dsDataAcquisition'
+            make $tiPred.chars > 0 ?? 'dsDataAcquisitions[Select[' ~ $tiPred ~ '&]]' !! 'dsDataAcquisitions'
         }
     }
 
@@ -130,7 +128,7 @@ class DSL::English::DataAcquisitionWorkflows::Actions::WL::System
     ##-----------------------------------------------------
     method introspection-timeline-query ($/) {
         my $res = self.introspection-data-retrieval($/);
-        make 'Block[{dsTemp=' ~ $res ~ '}, GroupBy[Normal@dsTemp, #UserID &, TimelinePlot[#Timestamp -> #PeriodMeal & /@ #, AspectRatio -> 1/4, ImageSize -> Large] &]]'
+        make 'Block[{dsTemp=' ~ $res ~ '}, GroupBy[Normal@dsTemp, #UserID &, TimelinePlot[#Timestamp -> #PeriodAcquisition & /@ #, AspectRatio -> 1/4, ImageSize -> Large] &]]'
     }
 
     ##=====================================================
