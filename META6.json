@@ -3,7 +3,7 @@
   "name": "DSL::English::DataAcquisitionWorkflows",
   "api": "1",
   "auth": "github:antononcube",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Data acquisition workflows building by natural language commands.",
   "authors": [
     "Anton Antonov"
@@ -19,6 +19,7 @@
     "DSL::English::DataAcquisitionWorkflows::Grammar::IngredientSpec": "lib/DSL/English/DataAcquisitionWorkflows/Grammar/IngredientSpec.rakumod",
     "DSL::English::DataAcquisitionWorkflows::Grammar::IngredientQuery": "lib/DSL/English/DataAcquisitionWorkflows/Grammar/IngredientQuery.rakumod",
     "DSL::English::DataAcquisitionWorkflows::Grammar::IntrospectionQuery": "lib/DSL/English/DataAcquisitionWorkflows/Grammar/IntrospectionQuery.rakumod",
+    "DSL::English::DataAcquisitionWorkflows::Grammar::RandomDataGeneration": "lib/DSL/English/DataAcquisitionWorkflows/Grammar/RandomDataGeneration.rakumod",
     "DSL::English::DataAcquisitionWorkflows::Grammar::RecommendationsCommand": "lib/DSL/English/DataAcquisitionWorkflows/Grammar/RecommendationsCommand.rakumod"
   },
   "depends": [

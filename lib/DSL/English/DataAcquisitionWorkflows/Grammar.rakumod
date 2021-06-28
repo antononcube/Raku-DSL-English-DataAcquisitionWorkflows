@@ -42,6 +42,7 @@ use DSL::English::DataAcquisitionWorkflows::Grammar::IngredientQuery;
 use DSL::English::DataAcquisitionWorkflows::Grammar::IntrospectionQuery;
 use DSL::English::DataAcquisitionWorkflows::Grammar::RecommendationsCommand;
 use DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases;
+use DSL::English::DataAcquisitionWorkflows::Grammar::RandomDataGeneration;
 
 grammar DSL::English::DataAcquisitionWorkflows::Grammar
         does DSL::Shared::Roles::English::TimeIntervalSpec
@@ -51,7 +52,8 @@ grammar DSL::English::DataAcquisitionWorkflows::Grammar
         does DSL::English::DataAcquisitionWorkflows::Grammar::IntrospectionQuery
         does DSL::English::DataAcquisitionWorkflows::Grammar::IngredientQuery
         does DSL::English::DataAcquisitionWorkflows::Grammar::RecommendationsCommand
-        does DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases {
+        does DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
+        does DSL::English::DataAcquisitionWorkflows::Grammar::RandomDataGeneration {
 
     # TOPa
     rule TOP {
@@ -60,6 +62,7 @@ grammar DSL::English::DataAcquisitionWorkflows::Grammar
         <ingredient-query-command> ||
         <recommendations-by-profile-command> ||
         <recommendations-command> ||
+        <random-data-generation-command> ||
         <data-entity-command>
     }
 

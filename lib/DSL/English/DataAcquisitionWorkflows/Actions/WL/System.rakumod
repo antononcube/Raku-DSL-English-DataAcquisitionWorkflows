@@ -95,7 +95,7 @@ class DSL::English::DataAcquisitionWorkflows::Actions::WL::System
 
         if $.userID.defined and $.userID.chars > 0 {
             my $userIDPred = '#UserID == "' ~ $.userID ~ '"';
-            make 'dsDataAcquisitions[Select[' ~ $tiPred ~ ' && '~ $userIDPred ~ '&]]'
+            make 'dsDataAcquisitions[Select[' ~ ( $tiPred.chars > 0 ?? $tiPred ~ ' && ' ~ $userIDPred !! $userIDPred ) ~ '&]]'
         } else {
             make $tiPred.chars > 0 ?? 'dsDataAcquisitions[Select[' ~ $tiPred ~ '&]]' !! 'dsDataAcquisitions'
         }
@@ -128,7 +128,7 @@ class DSL::English::DataAcquisitionWorkflows::Actions::WL::System
     ##-----------------------------------------------------
     method introspection-timeline-query ($/) {
         my $res = self.introspection-data-retrieval($/);
-        make 'Block[{dsTemp=' ~ $res ~ '}, GroupBy[Normal@dsTemp, #UserID &, TimelinePlot[#Timestamp -> #PeriodAcquisition & /@ #, AspectRatio -> 1/4, ImageSize -> Large] &]]'
+        make 'Block[{dsTemp=' ~ $res ~ '}, GroupBy[Normal@dsTemp, #UserID &, TimelinePlot[#Timestamp -> #DatasetID & /@ #, AspectRatio -> 1/4, ImageSize -> Large] &]]'
     }
 
     ##=====================================================
@@ -142,7 +142,17 @@ class DSL::English::DataAcquisitionWorkflows::Actions::WL::System
     ## Recommendations
     ##=====================================================
     method recommendations-command($/) {
-        make 'smrDataAcquisitions ==> SMRRecommend[' ~ self.makeUserIDTag() ~'] ==> SMRMonJoinAcross["Warning"->False] ==> SMRMonTakeValue[]';
+        my Str $actionPred = '';
+        if $<acquire-phrase> { $actionPred = '"Action:Acquire"'}
+        elsif $<analyze-phrase> { $actionPred = '"Action:Analyze"'}
+
+        my Str $prof =
+                do if self.makeUserIDTag().chars > 0 && $actionPred.chars > 0 { '{' ~ ( self.makeUserIDTag(), $actionPred).join(',') ~ '}' }
+                elsif self.makeUserIDTag().chars > 0 {self.makeUserIDTag() }
+                elsif $actionPred.chars > 0 { $actionPred }
+                else {'' }
+
+        make 'smrDataAcquisitions ==> SMRMonRecommendByProfile[' ~ $prof ~ '] ==> SMRMonJoinAcross["Warning"->False] ==> SMRMonTakeValue[]';
     }
 
     ##=====================================================
@@ -200,8 +210,42 @@ class DSL::English::DataAcquisitionWorkflows::Actions::WL::System
     }
 
     ##=====================================================
-    ## Fundamental tokens / rules
+    ## Random data generation
     ##=====================================================
+    method random-data-generation-command($/) { make $/.values[0].made; }
+
+    method random-tabular-data-generation-command($/) {
+
+        if $<random-tabular-dataset-arguments-list> {
+            my %allArgs = $<random-tabular-dataset-arguments-list>.made;
+            %allArgs = %( NumberOfRows => 'Automatic', NumberOfColumns => 'Automatic' ) , %allArgs;
+
+            if %allArgs<ColumnNames>:exists { %allArgs = %allArgs , %( NumberOfColumns => '{' ~ %allArgs<ColumnNames> ~ '}' ) }
+            my %opts = %allArgs;
+            %opts<NumberOfColumns>:delete;
+            %opts<NumberOfRows>:delete;
+            %opts<ColumnNames>:delete;
+
+            my $opts = %opts.elems == 0 ?? '' !! ', ' ~ %opts.values.join(', ') ;
+            make 'ResourceFunction["RandomTabularDataset"][{' ~ %allArgs<NumberOfRows> ~ ', ' ~ %allArgs<NumberOfColumns> ~ '}' ~ $opts ~ ']';
+        } else {
+            make 'ResourceFunction["RandomTabularDataset"][]';
+        }
+    }
+
+    method random-tabular-dataset-arguments-list($/) { make $<random-tabular-dataset-argument>>>.made; }
+    method random-tabular-dataset-argument($/) { make $/.values[0].made; }
+
+    method random-tabular-dataset-nrows-spec($/) { make %( NumberOfRows => $/.values[0].made ); }
+
+    method random-tabular-dataset-ncols-spec($/) { make %( NumberOfColumns => $/.values[0].made ); }
+
+    method random-tabular-dataset-colnames-spec($/) { make %( ColumnNames => ~ $/.values[0].made ); }
+
+    method random-tabular-dataset-form-spec($/) { make %( Form => '"Form" -> "' ~ $/.values[0].made ~ '"' ); }
+
+    method random-tabular-dataset-col-generators-spec($/) { make %( Generators => '"Generators" -> ' ~ $/.values[0].made ); }
+
 
     ##=====================================================
     ## Fundamental tokens / rules
@@ -257,5 +301,17 @@ class DSL::English::DataAcquisitionWorkflows::Actions::WL::System
     method ingredient-spec($/) {
         make '"ColumnHeading:' ~ $/.values[0].made.substr(1, *-1) ~ '"';
     }
+
+    ##-------------------------------------------------------
+    ## Generic
+    ##-------------------------------------------------------
+    method word-value($/) {
+        make $/.Str;
+    }
+
+    # Column specs
+    method column-specs-list($/) { make $<column-spec>>>.made.join(', '); }
+    method column-spec($/) {  make $/.values[0].made; }
+    method column-name-spec($/) { make '"' ~ $<mixed-quoted-variable-name>.made.subst(:g, '"', '') ~ '"'; }
 
 }

@@ -33,7 +33,7 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
         <data-schema-phrase> || <dataset-phrase>
     }
 
-    rule dataset-phrase { <data-noun> | <datasets-noun> | <dataset-noun> | <data-frames> | <data-frame> }
+    rule dataset-phrase { <data-frames> | <data-frame> | <data-noun> | <datasets-noun> | <dataset-noun> }
 
     rule data-schema-phrase  { [ <data-noun> | <dataset-noun> ]? <schema-data-acqui-word> }
     rule data-schemas-phrase { [ <data-noun> | <dataset-noun> ]? <schemas-data-acqui-word> }
@@ -180,7 +180,11 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
     token experimenting-data-acqui-word { :i 'experimenting' | ([\w]+) <?{ $0.Str !(elem) <experiment experimenting> and is-fuzzy-match( $0.Str, 'experimenting') }> }
     token feeling-data-acqui-word { :i 'feeling' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'feeling') }> }
     token few-data-acqui-word { :i 'few' | ([\w]+) <?{ $0.Str ne 'new' and is-fuzzy-match( $0.Str, 'few', 1) }> }
+    token form-data-acqui-word { :i 'form' | ([\w]+) <?{ $0.Str ne 'format' and is-fuzzy-match( $0.Str, 'form', 1) }> }
+    token format-data-acqui-word { :i 'format' | ([\w]+) <?{ $0.Str ne 'form' and is-fuzzy-match( $0.Str, 'format', 1) }> }
     token gathering-data-acqui-word {  :i 'gathering' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'gathering') }> }
+    token generator-data-acqui-word {  :i 'generator' | ([\w]+) <?{ $0.Str ne 'generators' and is-fuzzy-match( $0.Str, 'generator') }> }
+    token generators-data-acqui-word {  :i 'generators' | ([\w]+) <?{ $0.Str ne 'generator' and is-fuzzy-match( $0.Str, 'generators') }> }
     token got-data-acqui-word { :i 'got' }
     token had-data-acqui-word { :i 'had' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'had', 1) }> }
     token have-data-acqui-word { :i 'have' | ([\w]+) <?{ is-fuzzy-match( $0.Str, 'have', 1) }> }
