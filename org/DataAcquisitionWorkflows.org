@@ -69,11 +69,36 @@
    - Convert the matrix into long form
    - Get metadata for each movie in a separate table
    - Make the metadata table in long form
-* TODO Implementation [45%] [5/11]
+* TODO Implementation [46%] [6/13]
 ** DONE GitHub repository
 - [[https://github.com/antononcube/Raku-DSL-English-DataAcquisitionWorkflows][DSL::English::DataAcquisitionWorkflows]]
 ** DONE Package structure
 - Implementation-wise.
+** DONE Leverage analogy with [[https://github.com/antononcube/Raku-DSL-English-FoodPreparationWorkflows][DSL::English::FoodPreparationWorkflows]]
+- Consider the following mapping / replacements:
+  | Action   | FoodPreparationWorkflows   | DataAcquisitionWorkflows  |
+  |----------+----------------------------+---------------------------|
+  |          | <ate-phrase>               | <acquired-phrase>         |
+  |          | <cook-phrase>              | <analyze-phrase>          |
+  |          | <cooked-phrase>            | <analyzed-phrase>         |
+  |          | <cooking-phrase>           | <analyzing-phrase>        |
+  |          | <course-phrase>            | <dataset-phrase>          |
+  |          | <dish-phrase>              | <data-schema-phrase>      |
+  |          | <eat-phrase>               | <acquire-phrase>          |
+  |          | <eating-phrase>            | <acquiring-phrase>        |
+  |          | <entity-country-name>      | <entity-data-name>        |
+  |          | <food-cuisine-spec>        | <data-source-spec>        |
+  |          | <food-quality-spec>        | <data-quality-spec        |
+  |          | <food-quality-spec>        | <data-quality-spec>       |
+  |          | <item-of-food-phrase>      | <item-of-data-phrase>     |
+  |          | <mixed-food-spec-list>     | <mixed-data-spec-list>    |
+  |          | <period-meal-spec>         | <period-acquisition-spec> |
+  |          | <sous-chef-spec>           | <data-acquirer-spec>      |
+  |          | <to-eat-phrase>            | <to-acquire-phrase>       |
+  | redefine | <ingredient-spec>          |                           |
+  | remove   | <allergic-reaction-phrase> |                           |
+  | remove   | <entity-country-adjective> |                           |
+  | remove   | <entity-region-name>       |                           |
 ** TODO Metadata entities package [66%] [2/3]
 - [[https://github.com/antononcube/Raku-DSL-Entity-Metadata][DSL::Entity::Metadata]]
 - [X] First version of the metadata entities package.
@@ -113,31 +138,56 @@
 - [ ] Refactored version.
   - This is would be very useful for grammar debugging.
 ** TODO Data quality query
-** Leverage analogy with [[https://github.com/antononcube/Raku-DSL-English-FoodPreparationWorkflows][DSL::English::FoodPreparationWorkflows]]
-- Consider the following mapping / replacements:
-  | Action   | FoodPreparationWorkflows   | DataAcquisitionWorkflows  |
-  |----------+----------------------------+---------------------------|
-  |          | <ate-phrase>               | <acquired-phrase>         |
-  |          | <cook-phrase>              | <analyze-phrase>          |
-  |          | <cooked-phrase>            | <analyzed-phrase>         |
-  |          | <cooking-phrase>           | <analyzing-phrase>        |
-  |          | <course-phrase>            | <dataset-phrase>          |
-  |          | <dish-phrase>              | <data-schema-phrase>      |
-  |          | <eat-phrase>               | <acquire-phrase>          |
-  |          | <eating-phrase>            | <acquiring-phrase>        |
-  |          | <entity-country-name>      | <entity-data-name>        |
-  |          | <food-cuisine-spec>        | <data-source-spec>        |
-  |          | <food-quality-spec>        | <data-quality-spec        |
-  |          | <food-quality-spec>        | <data-quality-spec>       |
-  |          | <item-of-food-phrase>      | <item-of-data-phrase>     |
-  |          | <mixed-food-spec-list>     | <mixed-data-spec-list>    |
-  |          | <period-meal-spec>         | <period-acquisition-spec> |
-  |          | <sous-chef-spec>           | <data-acquirer-spec>      |
-  |          | <to-eat-phrase>            | <to-acquire-phrase>       |
-  | redefine | <ingredient-spec>          |                           |
-  | remove   | <allergic-reaction-phrase> |                           |
-  | remove   | <entity-country-adjective> |                           |
-  | remove   | <entity-region-name>       |                           |
+** TODO Random data generation specification
+- [ ] Number of rows
+- [ ] Number of columns
+- [ ] Column names
+- [ ] Column types
+- [ ] Variable distributions
+- [ ] Shape (long, wide)
+- [ ] Variable generators
+- [ ] Missing values
+  - [ ] Max number of missing values
+  - [ ] Min number of missing values
+- [ ] List of data frames
+- [ ] Generators
+  - [ ] WL distributions (~NormalDistribution~, ~PoissonDistribution~)
+  - [ ] Random string
+  - [ ] Random word
+  - [ ] Random integer/real/complex
+  - [ ] Random pretentious job title
+  - [ ] Random date
+*** Examples
+- Make a random data frame with 5 columns
+- Create random tabular dataset with 200 rows
+- Create 200 random tabular datasets
+- Make random dataset with 200 rows and 5 numerical normaly distributed columns
+- Make a random data frame with 2 numerical and 3 categorical columns
+- Make a random dataset with financial transactions data
+- Create a random dataset with financial time series
+** TODO Time series data retrieval [0%] [0/4]
+- [ ] Should leverage introspection queries
+- [ ] Stocks
+  - [ ] Exchanges (NYSE, coinbase, etc.)
+  - [ ] Stock (GE, BTC, etc.)
+  - [ ] Variable (price action, trading volume, asks, bids, etc.)
+  - [ ] Currency
+  - [ ] Time interval
+  - [ ] Granularity
+  - [ ] Data source
+- [ ] Weather data
+- [ ] Vitals data (Health-care data)
+*** Examples
+**** Stocks
+- Give me GE trading volume data from NYSE since 2021 Jan 12.
+- Get BTC data for the last 10 min per second
+- Get BTC volume per second for the last 10 min
+- Get top 5 crypto currencies prices in US dollars for last week
+- Get BTC, ETH price and volume since Jan 2020
+**** Weather data
+- Get current weather data for mid-Florida
+- Get last month weather data for Miami
+- Obtain temperature and air pressure for Cleveland from Jan 2021
 * TODO Unit tests [66%] [6/9]
 ** General
 - The test files reused and modified from
