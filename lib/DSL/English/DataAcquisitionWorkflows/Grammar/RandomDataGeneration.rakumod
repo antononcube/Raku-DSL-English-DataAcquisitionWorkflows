@@ -3,7 +3,7 @@ use v6;
 role DSL::English::DataAcquisitionWorkflows::Grammar::RandomDataGeneration {
 
     # General random data generation command
-    rule random-data-generation-command { <random-tabular-data-generation-command>  }
+    rule random-data-generation-command { <random-tabular-data-generation-command> }
 
     # Random tabular data generation command
     rule random-tabular-data-generation-command {
@@ -11,8 +11,8 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::RandomDataGeneration {
         :my Int $*NCOLS = 0;
         :my Int $*COLNAMES = 0;
         :my Int $*COLGENERATORS = 0;
-        :my Int $*MINMISSING = 0;
-        :my Int $*MAXMISSING = 0;
+        :my Int $*MINNUMOFVALUES = 0;
+        :my Int $*MAXNUMOFVALUES = 0;
         :my Int $*DATASETFORM = 0;
         <.generate-directive>? <.a-determiner>? <.random-adjective> <.tabular-adjective>? <.dataset-phrase> <.filler-separator> <random-tabular-dataset-arguments-list>?
     }
@@ -26,7 +26,9 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::RandomDataGeneration {
         <random-tabular-dataset-ncols-spec> |
         <random-tabular-dataset-colnames-spec> |
         <random-tabular-dataset-form-spec> |
-        <random-tabular-dataset-col-generators-spec>
+        <random-tabular-dataset-col-generators-spec> |
+        <random-tabular-dataset-max-number-of-values-spec> |
+        <random-tabular-dataset-min-number-of-values-spec>
     }
 
     rule filler-separator {
@@ -54,6 +56,20 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::RandomDataGeneration {
 
     rule random-tabular-dataset-col-generators-spec {
         <?{ $*COLGENERATORS == 0 }> <.the-determiner>? <.column-generators-phrase> <assign-pairs-list> { $*COLGENERATORS = 1 }
+    }
+
+    rule random-tabular-dataset-max-number-of-values-spec {
+        <?{ $*MAXNUMOFVALUES == 0 }> [
+          <.maximum>? <.number-of> <.values-noun> <integer-value> |
+          <integer-value> <.maximum>? <.number-of> <.values-noun>
+        ] { $*MAXNUMOFVALUES = 1 }
+    }
+
+    rule random-tabular-dataset-min-number-of-values-spec {
+        <?{ $*MINNUMOFVALUES == 0 }> [
+          <.minimum> <.number-of> <.values-noun> <integer-value> |
+          <integer-value> <.minimum> <.number-of> <.values-noun>
+        ] { $*MINNUMOFVALUES = 1 }
     }
 
     # Column specs

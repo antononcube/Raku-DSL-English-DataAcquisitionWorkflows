@@ -246,6 +246,9 @@ class DSL::English::DataAcquisitionWorkflows::Actions::WL::System
 
     method random-tabular-dataset-col-generators-spec($/) { make %( Generators => '"Generators" -> ' ~ $/.values[0].made ); }
 
+    method random-tabular-dataset-max-number-of-values-spec($/) { make %( MaxNumberOfValues => '"MaxNumberOfValues" -> ' ~ $/.values[0].made ); }
+
+    method random-tabular-dataset-min-number-of-values-spec($/) { make %( MinNumberOfValues => '"MinNumberOfValues" -> ' ~ $/.values[0].made ); }
 
     ##=====================================================
     ## Fundamental tokens / rules
