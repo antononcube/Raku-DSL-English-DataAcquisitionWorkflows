@@ -18,13 +18,15 @@ unit module DSL::English::DataAcquisitionWorkflows;
 use DSL::Shared::Utilities::MetaSpecsProcessing;
 
 use DSL::English::DataAcquisitionWorkflows::Grammar;
-use DSL::English::DataAcquisitionWorkflows::Actions::WL::System;
-
 use DSL::English::DataAcquisitionWorkflows::Actions::Bulgarian::Standard;
+use DSL::English::DataAcquisitionWorkflows::Actions::R::base;
+use DSL::English::DataAcquisitionWorkflows::Actions::WL::System;
 
 #-----------------------------------------------------------
 my %targetToAction =
     "Mathematica"      => DSL::English::DataAcquisitionWorkflows::Actions::WL::System,
+    "R"                => DSL::English::DataAcquisitionWorkflows::Actions::R::base,
+    "R-base"           => DSL::English::DataAcquisitionWorkflows::Actions::R::base,
     "WL"               => DSL::English::DataAcquisitionWorkflows::Actions::WL::System,
     "WL-System"        => DSL::English::DataAcquisitionWorkflows::Actions::WL::System,
     "Bulgarian"        => DSL::English::DataAcquisitionWorkflows::Actions::Bulgarian::Standard;
@@ -33,6 +35,7 @@ my %targetToSeparator{Str} =
     "Julia"            => "\n",
     "Julia-DataFrames" => "\n",
     "R"                => " ;\n",
+    "R-base"           => " ;\n",
     "Mathematica"      => "\n",
     "WL"               => ";\n",
     "WL-ClCon"         => " ==>\n",
