@@ -138,18 +138,20 @@
 - [ ] Refactored version.
   - This is would be very useful for grammar debugging.
 ** TODO Data quality query
-** TODO Random data generation specification
-- [ ] Number of rows
-- [ ] Number of columns
-- [ ] Column names
+** TODO Random data generation specification [40%] [4/10]
+- [X] Number of rows
+- [X] Number of columns
+- [X] Column names
 - [ ] Column types
 - [ ] Variable distributions
-- [ ] Shape (long, wide)
+- [X] Shape (long, wide)
 - [ ] Variable generators
 - [ ] Missing values
   - [ ] Max number of missing values
   - [ ] Min number of missing values
-- [ ] List of data frames
+- [X] Number of values
+  - [X] Max number of values
+  - [X] Min number of values
 - [ ] Generators
   - [ ] WL distributions (~NormalDistribution~, ~PoissonDistribution~)
   - [ ] Random string
@@ -157,6 +159,7 @@
   - [ ] Random integer/real/complex
   - [ ] Random pretentious job title
   - [ ] Random date
+- [ ] List of data frames
 *** Examples
 - Make a random data frame with 5 columns
 - Create random tabular dataset with 200 rows
@@ -255,6 +258,6 @@
 - [ ] Recommendations
 - [ ] Recommendations by profile
 - [ ] Ingredient queries
-- [ ] Random data generation
+- [X] Random data generation
 - [ ] Data quality verification
 *** TODO Program DAW DSL notebook
