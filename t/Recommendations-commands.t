@@ -9,7 +9,7 @@ use Test;
 
 my $pCOMMAND = DSL::English::DataAcquisitionWorkflows::Grammar;
 
-plan 18;
+plan 20;
 
 ## 1
 ok $pCOMMAND.parse('recommend data'.lc),
@@ -82,5 +82,13 @@ ok $pCOMMAND.parse('tell me a few datasets'.lc),
 ## 18
 ok $pCOMMAND.parse('what to analyze'.lc),
         'what to analyze';
+
+## 19
+ok $pCOMMAND.parse('recommend 2 datasets to acquire'.lc),
+        'recommend 2 datasets to acquire';
+
+## 20
+ok $pCOMMAND.parse('recommend top 12 number of datasets'.lc),
+        'recommend top 12 number of datasets';
 
 done-testing;
