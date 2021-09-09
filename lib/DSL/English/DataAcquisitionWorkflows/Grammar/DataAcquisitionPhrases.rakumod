@@ -20,6 +20,11 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
     }
 
     ##-------------------------------------------------------
+    rule top-nrecs-spec {
+        <.top-noun>? <.number-of>? <integer-value> <.of-preposition>? <.recommendations-phrase>? <.for-preposition>?
+    }
+
+    ##-------------------------------------------------------
     rule recipe-phrase {
         <recipe-data-acqui-word> | <recipes-data-acqui-word>
     }

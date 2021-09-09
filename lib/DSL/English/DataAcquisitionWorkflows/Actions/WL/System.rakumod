@@ -142,9 +142,14 @@ class DSL::English::DataAcquisitionWorkflows::Actions::WL::System
     ## Recommendations
     ##=====================================================
     method recommendations-command($/) {
+        my $nrecs = '';
         my Str $actionPred = '';
         if $<acquire-phrase> { $actionPred = '"Action:Acquire"'}
         elsif $<analyze-phrase> { $actionPred = '"Action:Analyze"'}
+
+        if $<top-nrecs-spec> {
+            $nrecs = ', ' ~ $<top-nrecs-spec>.made;
+        }
 
         my Str $prof =
                 do if self.makeUserIDTag().chars > 0 && $actionPred.chars > 0 { '{' ~ ( self.makeUserIDTag(), $actionPred).join(',') ~ '}' }
@@ -152,7 +157,7 @@ class DSL::English::DataAcquisitionWorkflows::Actions::WL::System
                 elsif $actionPred.chars > 0 { $actionPred }
                 else {'' }
 
-        make 'smrDataAcquisitions ==> SMRMonRecommendByProfile[' ~ $prof ~ '] ==> SMRMonJoinAcross["Warning"->False] ==> SMRMonTakeValue[]';
+        make 'smrDataAcquisitions ==> SMRMonRecommendByProfile[' ~ $prof ~ $nrecs ~ '] ==> SMRMonJoinAcross["Warning"->False] ==> SMRMonTakeValue[]';
     }
 
     ##=====================================================
@@ -171,7 +176,12 @@ class DSL::English::DataAcquisitionWorkflows::Actions::WL::System
     }
 
     method recommendations-by-profile-main($/) {
+        my Str $nrecs = '';
         my Str @resProfile;
+
+        if $<top-nrecs-spec> {
+            $nrecs = ', ' ~ $<top-nrecs-spec>.made;
+        }
 
         if $<data-quality-spec> {
              @resProfile.append($<data-quality-spec>.made)
@@ -206,7 +216,7 @@ class DSL::English::DataAcquisitionWorkflows::Actions::WL::System
         }
 
         #make to_DSL_code('USE TARGET SMRMon-R; use smrDataAcquisitions; recommend by profile ' ~ @resProfile.join(', ') ~ '; echo pipeline value;');
-        make 'smrDataAcquisitions ==> SMRMonRecommendByProfile[ {' ~ @resProfile.join(', ') ~ '} ] ==> SMRMonJoinAcross["Warning"->False] ==> SMRMonTakeValue[]';
+        make 'smrDataAcquisitions ==> SMRMonRecommendByProfile[ {' ~ @resProfile.join(', ') ~ '}' ~ $nrecs ~ '] ==> SMRMonJoinAcross["Warning"->False] ==> SMRMonTakeValue[]';
     }
 
     ##=====================================================
@@ -253,6 +263,10 @@ class DSL::English::DataAcquisitionWorkflows::Actions::WL::System
     ##=====================================================
     ## Fundamental tokens / rules
     ##=====================================================
+    method top-nrecs-spec($/) {
+        make $<integer-value>.made;
+    }
+
     method data-source-spec($/, :$tag = True) {
         make $tag ?? '"DataCategory:' ~ $/.Str.trim.lc ~ '"' !! '"' ~ $/.Str.trim.lc ~ '"';
     }

@@ -3,8 +3,8 @@ use v6;
 role DSL::English::DataAcquisitionWorkflows::Grammar::RecommendationsCommand {
 
     rule recommendations-command {
-        <.can-data-acqui-word> <.data-acquirer-spec> <.recommend-phrase> <.item-of-data-phrase> <.with-preposition> <ingredient-spec-list> |
         [ <.recommend-phrase> | <.what-pronoun> ]
+          <top-nrecs-spec>?
           [ <several-phrase> | <a-determiner> | <the-determiner> ]?
           [ <.something-data-acqui-word> | <.some-determiner>? <.item-of-data-phrase> | <.item-of-data-phrase>? <recipe-phrase> ]?
           [ <.to-preposition> [ <analyze-phrase> | <acquire-phrase> ] ]?
@@ -12,6 +12,7 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::RecommendationsCommand {
     }
 
     rule recommendations-by-profile-command {
+        <.can-data-acqui-word> <.data-acquirer-spec> <recommendations-by-profile-command> |
         <recommendations-by-profile-opportunistic> |
         <recommendations-by-profile-user-wants> |
         <recommendations-by-profile-main> }
@@ -26,19 +27,20 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::RecommendationsCommand {
            <period-acquisition-spec> <.from-preposition>? <data-source-spec> ] }
 
     rule recommendations-by-profile-main {
-        [ <recommend-phrase> | <tell-data-acqui-word>  | <show-data-acqui-word> ] <.me-data-acqui-word>? <.a-determiner>? <.few-data-acqui-word>? [
-           <item-of-data-phrase> <.from-preposition> <data-source-spec> |
-           [ <recipe-phrase> | <item-of-data-phrase> ] [
-              <.from-preposition> <data-source-spec> |
-              <.with-preposition> <data-with-quality-spec-list> ] |
-           <data-with-quality-spec-list> [ <recipe-phrase> | <dataset-phrase> ] |
-           <some-data-acqui-word>? [ <data-quality-spec-list> || <mixed-data-spec-list> ] [ <item-of-data-recipe-phrase> | <item-of-data-phrase> <.recommendations-phrase>? | <recommendations-phrase> ] |
-           <something-data-acqui-word> <.with-preposition>? <data-with-quality-spec-list> |
-           <period-spec> <.item-of-data-phrase> |
-           <new-data-acqui-word> <item-of-data-recipe-phrase> |
-           <.some-data-acqui-word>? <interesting-data-acqui-word> [ <data-with-quality-spec-list> [ <dataset-phrase> | <acquisition-phrase> ]? ]? <recipe-phrase>? |
-           <ingredient-spec-list> <item-of-data-phrase> <.recommendations-phrase> |
-           <non-prefix> <data-source-spec> <recipe-phrase> |
-           <.some-data-acqui-word>? <interesting-data-acqui-word> <data-source-spec> <recipe-phrase> ]
+        [ <recommend-phrase> | <tell-data-acqui-word>  | <show-data-acqui-word> ] <.me-data-acqui-word>? <.a-determiner>? <.few-data-acqui-word>?
+          <top-nrecs-spec>? [
+            <item-of-data-phrase> <.from-preposition> <data-source-spec> |
+            [ <recipe-phrase> | <item-of-data-phrase> ] [
+               <.from-preposition> <data-source-spec> |
+               <.with-preposition> <data-with-quality-spec-list> ] |
+            <data-with-quality-spec-list> [ <recipe-phrase> | <dataset-phrase> ] |
+            <some-data-acqui-word>? [ <data-quality-spec-list> || <mixed-data-spec-list> ] [ <item-of-data-recipe-phrase> | <item-of-data-phrase> <.recommendations-phrase>? | <recommendations-phrase> ] |
+            <something-data-acqui-word> <.with-preposition>? <data-with-quality-spec-list> |
+            <period-spec> <.item-of-data-phrase> |
+            <new-data-acqui-word> <item-of-data-recipe-phrase> |
+            <.some-data-acqui-word>? <interesting-data-acqui-word> [ <data-with-quality-spec-list> [ <dataset-phrase> | <acquisition-phrase> ]? ]? <recipe-phrase>? |
+            <ingredient-spec-list> <item-of-data-phrase> <.recommendations-phrase> |
+            <non-prefix> <data-source-spec> <recipe-phrase> |
+            <.some-data-acqui-word>? <interesting-data-acqui-word> <data-source-spec> <recipe-phrase> ]
     }
 }
