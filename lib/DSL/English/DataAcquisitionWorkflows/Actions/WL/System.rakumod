@@ -56,6 +56,9 @@ class DSL::English::DataAcquisitionWorkflows::Actions::WL::System
         'AbsoluteTime[DateObject["' ~ %tiSpec<From> ~ '"]] <= AbsoluteTime[#Timestamp] <= AbsoluteTime[DateObject["' ~ %tiSpec<To> ~ '"]]'
     }
 
+    # Separator
+    method separator() { " \\[DoubleLongRightArrow]\n" }
+
     ##=====================================================
     ## TOP
     ##=====================================================
@@ -157,7 +160,10 @@ class DSL::English::DataAcquisitionWorkflows::Actions::WL::System
                 elsif $actionPred.chars > 0 { $actionPred }
                 else {'' }
 
-        make 'smrDataAcquisitions ==> SMRMonRecommendByProfile[' ~ $prof ~ $nrecs ~ '] ==> SMRMonJoinAcross["Warning"->False] ==> SMRMonTakeValue[]';
+        make 'smrDataAcquisitions' ~ self.separator() ~
+                'SMRMonRecommendByProfile[' ~ $prof ~ $nrecs ~ ']' ~ self.separator() ~
+                'SMRMonJoinAcross["Warning"->False]' ~ self.separator() ~
+                'SMRMonTakeValue[]';
     }
 
     ##=====================================================
@@ -216,7 +222,10 @@ class DSL::English::DataAcquisitionWorkflows::Actions::WL::System
         }
 
         #make to_DSL_code('USE TARGET SMRMon-R; use smrDataAcquisitions; recommend by profile ' ~ @resProfile.join(', ') ~ '; echo pipeline value;');
-        make 'smrDataAcquisitions ==> SMRMonRecommendByProfile[ {' ~ @resProfile.join(', ') ~ '}' ~ $nrecs ~ '] ==> SMRMonJoinAcross["Warning"->False] ==> SMRMonTakeValue[]';
+        make 'smrDataAcquisitions' ~ self.separator() ~
+                'SMRMonRecommendByProfile[ {' ~ @resProfile.join(', ') ~ '}' ~ $nrecs ~ ']' ~ self.separator() ~
+                'SMRMonJoinAcross["Warning"->False]' ~ self.separator() ~
+                'SMRMonTakeValue[]';
     }
 
     ##=====================================================
@@ -331,4 +340,8 @@ class DSL::English::DataAcquisitionWorkflows::Actions::WL::System
     method column-spec($/) {  make $/.values[0].made; }
     method column-name-spec($/) { make '"' ~ $<mixed-quoted-variable-name>.made.subst(:g, '"', '') ~ '"'; }
 
+    # Setup code commend
+    method setup-code-command($/) {
+        make 'SETUPCODE' => 'Echo["Import/create smrDataAcquisitions"];'
+    }
 }

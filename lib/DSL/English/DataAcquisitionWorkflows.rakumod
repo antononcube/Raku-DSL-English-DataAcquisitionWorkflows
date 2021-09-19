@@ -36,10 +36,9 @@ my Str %targetToSeparator{Str} =
     "Julia-DataFrames" => "\n",
     "R"                => " ;\n",
     "R-base"           => " ;\n",
-    "Mathematica"      => "\n",
-    "WL"               => ";\n",
-    "WL-ClCon"         => " ==>\n",
-    "WL-System"        => ";\n",
+    "Mathematica"      => " \\[DoubleLongRightArrow]\n",
+    "WL"               => " \\[DoubleLongRightArrow]\n",
+    "WL-System"        => " \\[DoubleLongRightArrow]\n",
     "Bulgarian"        => "\n";
 
 
@@ -49,13 +48,14 @@ sub has-semicolon (Str $word) {
 }
 
 #-----------------------------------------------------------
-proto ToDataAcquisitionWorkflowCode(Str $command, Str $target = 'WL-System', Str :$userID = '' ) is export {*}
+proto ToDataAcquisitionWorkflowCode(Str $command, Str $target = 'WL-System', | ) is export {*}
 
-multi ToDataAcquisitionWorkflowCode ( Str $command, Str $target = 'WL-System', Str :$userID = '' ) {
+multi ToDataAcquisitionWorkflowCode ( Str $command, Str $target = 'WL-System', *%args ) {
 
     DSL::Shared::Utilities::CommandProcessing::ToWorkflowCode( $command,
                                                                grammar => DSL::English::DataAcquisitionWorkflows::Grammar,
                                                                :%targetToAction,
                                                                :%targetToSeparator,
-                                                               :$target )
+                                                               :$target,
+                                                               |%args )
 }
