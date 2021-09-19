@@ -5,6 +5,7 @@ use DSL::English::DataAcquisitionWorkflows;
 use DSL::English::DataAcquisitionWorkflows::Actions::WL::System;
 
 my @testCommands = (
+'recommend data to acquire',
 'recommend time series data for pumps',
 'recommend maintenance data for printers',
 'recommend customer service data that has product descriptions',
@@ -20,14 +21,14 @@ my @testCommands = (
 'what are the outliers in column Col1 in the table Tbl1'
 );
 
-my @targets = ('WL-System');
+my @targets = <R-base WL-System>;
 
 for @testCommands -> $c {
     say "=" x 60;
     say "command :\t", $c;
     for @targets -> $t {
         my $start = now;
-        my $res = ToDataAcquisitionWorkflowCode($c, $t);
+        my $res = ToDataAcquisitionWorkflowCode($c ~ "\ninclude setup code", $t, format => 'hash');
         say "interp. :\t", $res;
         say $t, "\ttime: ", round(now - $start,0.0001);
     }
