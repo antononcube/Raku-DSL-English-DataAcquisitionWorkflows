@@ -83,7 +83,6 @@ class DSL::English::DataAcquisitionWorkflows::Actions::R::base
         my $tiPred ='';
 
         with $<time-interval-spec> {
-            say $<time-interval-spec>.made;
             my %tiSpec = $<time-interval-spec>.made;
             $tiPred = self.make-time-interval-predicate(%tiSpec);
         };
@@ -267,6 +266,8 @@ class DSL::English::DataAcquisitionWorkflows::Actions::R::base
     method random-tabular-dataset-max-number-of-values-spec($/) { make %( MaxNumberOfValues => 'maxNumberOfValues = ' ~ $/.values[0].made ); }
 
     method random-tabular-dataset-min-number-of-values-spec($/) { make %( MinNumberOfValues => 'minNumberOfValues = ' ~ $/.values[0].made ); }
+
+    method rows-or-columns-count-spec($/) { make $/.values[0].made; }
 
     ##=====================================================
     ## Fundamental tokens / rules
