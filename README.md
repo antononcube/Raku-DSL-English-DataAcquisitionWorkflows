@@ -1,6 +1,6 @@
-# Raku DSL::English::DataAcquisitionWorkflows
-
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+    # Raku DSL::English::DataAcquisitionWorkflows
+    
+    [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 ## In brief
 
@@ -89,7 +89,7 @@ say ToDataAcquisitionWorkflowCode(
 
 The general structure of this package and its grammar (and sub-grammars) design is analogous 
 the structure and grammars of the Raku package
-[DSL::English::DataAcquisitionWorkflows](https://github.com/antononcube/Raku-DSL-English-FoodPreparationWorkflows),
+[DSL::English::FoodPreparationWorkflows](https://github.com/antononcube/Raku-DSL-English-FoodPreparationWorkflows),
 [AAr3].
 
 The original versions of the grammars were generated using Mathematica.
