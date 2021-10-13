@@ -147,9 +147,9 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
 
     rule to-acquire-phrase { <to-preposition> [ <acquire-phrase> | <try-data-acqui-word> <out-adverb>? ] }
 
-    rule acquire-phrase { <acquire-data-acqui-word> | <get-verb> | <process-data-acqui-word> }
+    rule acquire-phrase { <acquire-data-acqui-word> | <get-verb> | <process-data-acqui-word> | <use-verb> }
 
-    rule acquired-phrase { <acquired-data-acqui-word> | <got-data-acqui-word> | <had-data-acqui-word> | <processed-data-acqui-word>}
+    rule acquired-phrase { <acquired-data-acqui-word> | <got-data-acqui-word> | <had-data-acqui-word> | <processed-data-acqui-word> | <used-verb>}
 
     rule acquiring-phrase { <acquiring-data-acqui-word> | <processing-data-acqui-word> }
 
