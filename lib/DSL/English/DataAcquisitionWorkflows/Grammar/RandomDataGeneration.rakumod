@@ -35,12 +35,14 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::RandomDataGeneration {
         <and-conjunction>? [ <with-preposition> | <using-preposition> | <for-preposition> ]
     }
 
+    rule rows-or-columns-count-spec { <integer-value> | <numeric-word-form> }
+
     rule random-tabular-dataset-nrows-spec {
-        <?{ $*NROWS == 0 }> <integer-value> [ <.number-of-rows-phrase> | <.rows> ] { $*NROWS = 1 }
+        <?{ $*NROWS == 0 }> <rows-or-columns-count-spec> [ <.number-of-rows-phrase> | <.rows> ] { $*NROWS = 1 }
     }
 
     rule random-tabular-dataset-ncols-spec {
-        <?{ $*NCOLS == 0 }> <integer-value> [ <.number-of-columns-phrase> | <.columns-noun> ] { $*NCOLS = 1 }
+        <?{ $*NCOLS == 0 }> <rows-or-columns-count-spec> [ <.number-of-columns-phrase> | <.columns-noun> ] { $*NCOLS = 1 }
     }
 
     rule random-tabular-dataset-colnames-spec {
