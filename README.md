@@ -1,6 +1,6 @@
-    # Raku DSL::English::DataAcquisitionWorkflows
+# Raku DSL::English::DataAcquisitionWorkflows
     
-    [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 ## In brief
 
@@ -100,6 +100,8 @@ See the notebook
 
 ## References
 
+### Repositories
+
 [AAr1] Anton Antonov,
 [DSL::Shared Raku package](https://github.com/antononcube/Raku-DSL-Shared),
 (2020),
@@ -114,3 +116,10 @@ See the notebook
 [DSL::English::FoodPreparationWorkflows Raku package](https://github.com/antononcube/Raku-DSL-English-FoodPreparationWorkflows),
 (2021),
 [GitHub/antononcube](https://github.com/antononcube).
+
+### Videos
+
+[AAv1] Anton Antonov,
+["Multi-language Data Acquisition Conversational Agent (extended version)"](https://www.youtube.com/watch?v=KlEl2b8oxb8),
+(2021),
+[YouTube.com](https://www.youtube.com/channel/UC5qMPIsJeztfARXWdIw3Xzw).
