@@ -1,34 +1,40 @@
 {
-  "perl": "6.d",
   "name": "DSL::English::DataAcquisitionWorkflows",
-  "api": "1",
-  "auth": "github:antononcube",
-  "version": "0.1.1",
   "description": "Data acquisition workflows building by natural language commands.",
+  "version": "0.1.1",
+  "perl": "6.d",
   "authors": [
     "Anton Antonov"
   ],
-  "license": "GPL-3.0-or-later",
+  "auth": "github:antononcube",
+  "depends": [
+    "Data::ExampleDatasets",
+    "Data::Generators",
+    "Data::Reshapers",
+    "Data::Summarizers",
+    "DSL::English::DataQueryWorkflows",
+    "DSL::Entity::Metadata",
+    "DSL::Shared"
+  ],
+  "build-depends": [],
+  "test-depends": [],
   "provides": {
     "DSL::English::DataAcquisitionWorkflows": "lib/DSL/English/DataAcquisitionWorkflows.rakumod",
     "DSL::English::DataAcquisitionWorkflows::Actions::Bulgarian::Standard": "lib/DSL/English/DataAcquisitionWorkflows/Actions/Bulgarian/Standard.rakumod",
-    "DSL::English::DataAcquisitionWorkflows::Actions::WL::System": "lib/DSL/English/DataAcquisitionWorkflows/Actions/WL/System.rakumod",
     "DSL::English::DataAcquisitionWorkflows::Actions::R::base": "lib/DSL/English/DataAcquisitionWorkflows/Actions/R/base.rakumod",
+    "DSL::English::DataAcquisitionWorkflows::Actions::RakuObject::FSMCommand": "lib/DSL/English/DataAcquisitionWorkflows/Actions/RakuObject/FSMCommand.rakumod",
+    "DSL::English::DataAcquisitionWorkflows::Actions::WL::System": "lib/DSL/English/DataAcquisitionWorkflows/Actions/WL/System.rakumod",
+    "DSL::English::DataAcquisitionWorkflows::FSM": "lib/DSL/English/DataAcquisitionWorkflows/FSM.rakumod",
     "DSL::English::DataAcquisitionWorkflows::Grammar": "lib/DSL/English/DataAcquisitionWorkflows/Grammar.rakumod",
     "DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases": "lib/DSL/English/DataAcquisitionWorkflows/Grammar/DataAcquisitionPhrases.rakumod",
-    "DSL::English::DataAcquisitionWorkflows::Grammar::IngredientSpec": "lib/DSL/English/DataAcquisitionWorkflows/Grammar/IngredientSpec.rakumod",
     "DSL::English::DataAcquisitionWorkflows::Grammar::IngredientQuery": "lib/DSL/English/DataAcquisitionWorkflows/Grammar/IngredientQuery.rakumod",
+    "DSL::English::DataAcquisitionWorkflows::Grammar::IngredientSpec": "lib/DSL/English/DataAcquisitionWorkflows/Grammar/IngredientSpec.rakumod",
     "DSL::English::DataAcquisitionWorkflows::Grammar::IntrospectionQuery": "lib/DSL/English/DataAcquisitionWorkflows/Grammar/IntrospectionQuery.rakumod",
     "DSL::English::DataAcquisitionWorkflows::Grammar::RandomDataGeneration": "lib/DSL/English/DataAcquisitionWorkflows/Grammar/RandomDataGeneration.rakumod",
     "DSL::English::DataAcquisitionWorkflows::Grammar::RecommendationsCommand": "lib/DSL/English/DataAcquisitionWorkflows/Grammar/RecommendationsCommand.rakumod"
   },
-  "depends": [
-    "DSL::Shared",
-    "DSL::Entity::Metadata"
-  ],
-  "build-depends": [],
-  "test-depends": [],
   "resources": [],
+  "license": "GPL-3.0-or-later",
   "tags": [
     "data",
     "acquisition",
@@ -40,5 +46,6 @@
     "workflow",
     "pipeline"
   ],
+  "api": "1",
   "source-url": "https://github.com/antononcube/Raku-DSL-English-DataAcquisitionWorkflows.git"
 }
