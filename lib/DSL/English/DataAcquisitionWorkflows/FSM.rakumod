@@ -57,13 +57,13 @@ class DSL::English::DataAcquistionWorkflows::FSM
 
             &.re-say.("$stateID: Quiting.");
 
-            return @transitions.first({ $_.id eq 'quit' or $_.to eq 'Exit' }).to;
+            return 'Exit';
 
         } elsif $pres<global-command><global-cancel> {
 
             &.re-say.("$stateID: Starting over.");
 
-            return @transitions.first({ $_.id eq 'startOver' or $_.to eq 'WaitForRequest' }).to;
+            return 'WaitForRequest';
 
         } elsif $pres<global-command><global-show-all> {
 
@@ -71,25 +71,25 @@ class DSL::English::DataAcquistionWorkflows::FSM
             $!itemSpec = $pres;
             $!itemSpecCommand = $input;
 
-            return @transitions.first({ $_.id eq 'itemSpec' or $_.to eq 'ListOfItems' }).to;
+            return 'ListOfItems';
 
         } elsif $pres<global-command><global-help> {
 
             &.re-say.("$stateID: Help.");
             &.re-say.("$stateID: Type commands for the FSM...");
 
-            return @transitions.first({ $_.id eq 'startOver' or $_.to eq 'WaitForRequest' }).to;
+            return 'WaitForRequest';
 
         } elsif $pres<global-command><global-priority-list> {
 
-            return @transitions.first({ $_.id eq 'priority' or $_.to eq 'PriorityList' }).to;
+            return 'PriorityList';
 
         } elsif so $pres<global-command> {
 
             $.re-warn.("$stateID: No implemented reaction for the given service input.");
 
             # Why not just return 'WaitForRequest' ?
-            return @transitions.first({ $_.id eq 'startOver' or $_.to eq 'WaitForRequest' }).to;
+            return 'WaitForRequest';
         }
 
         &.ECHOLOGGING.("$stateID: Main commad parsing result: ", $pres);
@@ -98,13 +98,13 @@ class DSL::English::DataAcquistionWorkflows::FSM
         # Maybe ...
 
         if not so $pres<list-management-command> {
-            return @transitions.first({ $_.id eq 'startOver' or $_.to eq 'WaitForRequest' }).to;
+            return 'WaitForRequest';
         }
 
         # Switch to the next state
         $!itemSpecCommand = $input;
         $!itemSpec = $pres;
-        return @transitions.first({ $_.id eq 'itemSpec' or $_.to eq 'ListOfItems' }).to;
+        return 'ListOfItems';
     }
 
     #--------------------------------------------------------
@@ -158,7 +158,7 @@ class DSL::English::DataAcquistionWorkflows::FSM
         &.ECHOLOGGING.(@transitions);
 
         &.re-say.(to-pretty-table($.dataset.pick(12)));
-        return @transitions.first({ $_.id eq 'priorityListGiven' or $_.to eq 'WaitForRequest' }).to;
+        return 'WaitForRequest';
     }
 
     #--------------------------------------------------------
@@ -191,7 +191,7 @@ class DSL::English::DataAcquistionWorkflows::FSM
         } elsif so $pres {
             $.re-warn("$stateID: Delegate handling of global requests.");
 
-            return @transitions.first({ $_.id eq 'startOver' or $_.to eq 'WaitForRequest' }).to;
+            return 'WaitForRequest';
         }
 
         # Main command handling
@@ -210,7 +210,7 @@ class DSL::English::DataAcquistionWorkflows::FSM
 
             $!itemSpecCommand = $input;
             $!itemSpec = Nil;
-            return @transitions.first({ $_.id eq 'tryDataQuery' or $_.to eq 'ParseAsDataQuery' }).to;
+            return 'ParseAsDataQuery';
 
         }
 
@@ -222,7 +222,7 @@ class DSL::English::DataAcquistionWorkflows::FSM
         # Switch to the next state
         $!itemSpecCommand = $input;
         $!itemSpec = $pres;
-        return @transitions.first({ $_.id eq 'priorityListGiven' or $_.to eq 'WaitForRequest' }).to;
+        return 'WaitForRequest';
     }
 
     #--------------------------------------------------------
