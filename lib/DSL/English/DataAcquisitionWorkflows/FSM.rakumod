@@ -6,7 +6,8 @@ use DSL::Shared::Roles::English::GlobalCommand;
 use DSL::Shared::Roles::English::ListManagementCommand;
 use DSL::English::DataQueryWorkflows::Grammar;
 use DSL::English::DataQueryWorkflows::Actions::Raku::Reshapers;
-use DSL::Shared::Actions::English::Raku::ListManagementCommand;
+use DSL::English::DataAcquisitionWorkflows::Actions::RakuObject::FSMCommand;
+use Lingua::NumericWordForms::Roles::English::WordedNumberSpec;
 
 my @datasetMetadata = get-datasets-metadata();
 
@@ -15,35 +16,22 @@ class DSL::English::DataAcquistionWorkflows::FSM
 
     #--------------------------------------------------------
     # This dataset is supposed to be handled by the functions Data::Reshapers
-    has @.dataset;
+    has $.dataset is rw;
+    has $.acquiredData;
     has $.itemSpec;
     has $.itemSpecCommand;
 
     #--------------------------------------------------------
     # Global command
-    grammar GlobalCommand
+    grammar FSMGlobalCommand
+            does Lingua::NumericWordForms::Roles::English::WordedNumberSpec
             does DSL::Shared::Roles::ErrorHandling
             does DSL::Shared::Roles::English::GlobalCommand
+            does DSL::Shared::Roles::English::ListManagementCommand
             does DSL::Shared::Roles::English::PipelineCommand {
 
-        rule TOP { <pipeline-command> | <global-command> }
+        rule TOP { <.display-directive>? <list-management-command> | <global-command> | <pipeline-command> }
     };
-
-    #--------------------------------------------------------
-    # List management command grammar
-    grammar ListManagementCommand
-            does DSL::Shared::Roles::English::ListManagementCommand
-            does Lingua::NumericWordForms::Roles::English::WordedNumberSpec
-            does DSL::Shared::Roles::ErrorHandling {
-
-        rule TOP { <pipeline-command> | <list-management-command> }
-    };
-
-    #--------------------------------------------------------
-    # List management command actions
-
-    method list-management-command($/) {}
-    method list-management-command($/) {}
 
     #--------------------------------------------------------
     multi method choose-transition(Str $stateID where $_ ~~ 'WaitForRequest',
@@ -60,42 +48,43 @@ class DSL::English::DataAcquistionWorkflows::FSM
         }
 
         # Check was "global" command was entered. E.g."start over".
-        my $pres = GlobalCommand.parse($input, rule => 'global-command');
+        my $manager = DSL::English::DataAcquisitionWorkflows::Actions::RakuObject::FSMGrammar.new( object => $!dataset.clone);
+        my $pres = FSMGlobalCommand.parse($input, rule => 'TOP', actions => $manager);
 
         &.ECHOLOGGING.("$stateID: Global commad parsing result: ", $pres);
 
-        if $pres<global-quit> {
+        if $pres<global-command><global-quit> {
 
             &.re-say.("$stateID: Quiting.");
-            
+
             return @transitions.first({ $_.id eq 'quit' or $_.to eq 'Exit' }).to;
 
-        } elsif $pres<global-cancel> {
+        } elsif $pres<global-command><global-cancel> {
 
             &.re-say.("$stateID: Starting over.");
 
             return @transitions.first({ $_.id eq 'startOver' or $_.to eq 'WaitForRequest' }).to;
 
-        } elsif $pres<global-show-all> {
+        } elsif $pres<global-command><global-show-all> {
 
-            $.dataset = @datasetMetadata;
-            $.itemSpec = $pres;
-            $.itemSpecCommand = $input;
+            $!dataset = @datasetMetadata.clone;
+            $!itemSpec = $pres;
+            $!itemSpecCommand = $input;
 
             return @transitions.first({ $_.id eq 'itemSpec' or $_.to eq 'ListOfItems' }).to;
 
-        } elsif $pres<global-help> {
+        } elsif $pres<global-command><global-help> {
 
             &.re-say.("$stateID: Help.");
             &.re-say.("$stateID: Type commands for the FSM...");
 
             return @transitions.first({ $_.id eq 'startOver' or $_.to eq 'WaitForRequest' }).to;
 
-        } elsif $pres<global-priority-list> {
+        } elsif $pres<global-command><global-priority-list> {
 
             return @transitions.first({ $_.id eq 'priority' or $_.to eq 'PriorityList' }).to;
 
-        } elsif so $pres {
+        } elsif so $pres<global-command> {
 
             $.re-warn.("$stateID: No implemented reaction for the given service input.");
 
@@ -103,29 +92,60 @@ class DSL::English::DataAcquistionWorkflows::FSM
             return @transitions.first({ $_.id eq 'startOver' or $_.to eq 'WaitForRequest' }).to;
         }
 
-        # Main command handling
-        ## Why not just switch ot 'WaitForFilter'?
-        my $mres = ListManagementCommand.parse($input);
-
-        &.ECHOLOGGING("$stateID: Main commad parsing result: ", $mres);
+        &.ECHOLOGGING.("$stateID: Main commad parsing result: ", $pres);
 
         # If it cannot be parsed, show message
         # Maybe ...
 
-        if not so $mres {
+        if not so $pres<list-management-command> {
             return @transitions.first({ $_.id eq 'startOver' or $_.to eq 'WaitForRequest' }).to;
         }
 
         # Switch to the next state
-        $.itemSpecCommand = $input;
-        $.itemSpec = $mres;
+        $!itemSpecCommand = $input;
+        $!itemSpec = $pres;
         return @transitions.first({ $_.id eq 'itemSpec' or $_.to eq 'ListOfItems' }).to;
     }
 
     #--------------------------------------------------------
     multi method choose-transition(Str $stateID where $_ ~~ 'ListOfItems',
                                    $input is copy = Whatever, UInt $maxLoops = 5 --> Str) {
-        return 'None';
+
+        # Get next transitions
+        my @transitions = %.states{$stateID}.explicitNext;
+
+        &.ECHOLOGGING.(@transitions.raku.Str);
+        &.ECHOLOGGING.("$stateID: itemSpec => $!itemSpec");
+
+        if $!itemSpec<global-show-all> {
+
+            &.re-say.(to-pretty-table($!dataset));
+            return "WaitForRequest";
+
+        }
+
+        # Get new dataset
+        if $!itemSpec<list-management-command> {
+            $!dataset = $!itemSpec.made;
+        }
+
+        &.re-say.("$stateID: Obtained the records:");
+        if $!dataset ~~ Hash {
+            &.re-say.(to-pretty-table([$!dataset,]))
+        } else {
+            &.re-say.(to-pretty-table($!dataset));
+        }
+
+        # No items
+
+        # One item
+        if $!dataset ~~ Hash {
+            return "AcquireItem"
+        }
+
+        # Many items
+
+        return 'WaitForRequest';
     }
 
     #--------------------------------------------------------
@@ -156,7 +176,9 @@ class DSL::English::DataAcquistionWorkflows::FSM
         }
 
         # Check was "global" command was entered. E.g."start over".
-        my $pres = GlobalCommand.parse($input, rule => 'global-command');
+        my $pres = FSMGlobalCommand.parse($input,
+                rule => 'global-command',
+                actions => DSL::Shared::Actions::English::RakuObject::ListManagementCommand.new( object => $.dataset) );
 
         &.ECHOLOGGING.("$stateID: Global commad parsing result: ", $pres);
 
@@ -173,23 +195,23 @@ class DSL::English::DataAcquistionWorkflows::FSM
         }
 
         # Main command handling
-        my $mres = ListManagementCommandGrammar.parse($input,
-                actions => DSL::Shared::Actions::English::Raku::ListManagementCommand.new)
-
-        &.ECHOLOGGING("$stateID: Main commad parsing result: ", $mres);
+        &.ECHOLOGGING("$stateID: Main commad parsing result: ", $pres);
 
         # Special cases handling
-        if not so $mres {
+        if $pres<list-management-command> {
+            # List position command was entered. E.g."take the third one"
+
+            $pres.made;
+
+        } elsif not so $pres {
             # Cannot parse as filtering command
 
             &.re-say.("$stateID: Switch to DataQueryWorkflows parsing");
 
-            $.itemSpecCommand = $input;
-            $.itemSpec = Nil;
+            $!itemSpecCommand = $input;
+            $!itemSpec = Nil;
             return @transitions.first({ $_.id eq 'tryDataQuery' or $_.to eq 'ParseAsDataQuery' }).to;
 
-        } elsif $mres<list-management-command> {
-            # List position command was entered. E.g."take the third one"
         }
 
         # Process "regularly" expected filtering input.
@@ -198,8 +220,8 @@ class DSL::English::DataAcquistionWorkflows::FSM
 
 
         # Switch to the next state
-        $.itemSpecCommand = $input;
-        $.itemSpec = $mres;
+        $!itemSpecCommand = $input;
+        $!itemSpec = $pres;
         return @transitions.first({ $_.id eq 'priorityListGiven' or $_.to eq 'WaitForRequest' }).to;
     }
 
@@ -212,7 +234,16 @@ class DSL::English::DataAcquistionWorkflows::FSM
     #--------------------------------------------------------
     multi method choose-transition(Str $stateID where $_ ~~ 'AcquireItem',
                                    $input is copy = Whatever, UInt $maxLoops = 5 --> Str) {
-        return 'None';
+
+        # Get next transitions
+        my @transitions = %.states{$stateID}.explicitNext;
+
+        &.ECHOLOGGING.(@transitions.raku.Str);
+
+        &.re-say.("Acquiring data : ", $!dataset<Title>);
+        $!acquiredData = example-dataset( $!dataset<Package> ~ '::' ~ $!dataset<Item> ):keep;
+
+        return 'Exit';
     }
 
     #--------------------------------------------------------
@@ -224,6 +255,7 @@ class DSL::English::DataAcquistionWorkflows::FSM
     #--------------------------------------------------------
     multi method choose-transition(Str $stateID where $_ ~~ 'Exit',
                                    $input is copy = Whatever, UInt $maxLoops = 5 --> Str) {
+        # Should we ever be here?!
         return 'None';
     }
 }
