@@ -24,13 +24,10 @@ class DSL::English::DataAcquistionWorkflows::FSM
     #--------------------------------------------------------
     # Global command
     grammar FSMGlobalCommand
+            is DSL::English::DataQueryWorkflows::Grammar
             does Lingua::NumericWordForms::Roles::English::WordedNumberSpec
-            does DSL::Shared::Roles::ErrorHandling
-            does DSL::Shared::Roles::English::GlobalCommand
-            does DSL::Shared::Roles::English::ListManagementCommand
-            does DSL::Shared::Roles::English::PipelineCommand {
-
-        rule TOP { <.display-directive>? <list-management-command> | <global-command> | <pipeline-command> }
+            does DSL::Shared::Roles::English::GlobalCommand {
+        rule TOP { <.display-directive>? <list-management-command> | <global-command> | <workflow-commands-list> }
     };
 
     #--------------------------------------------------------
@@ -97,7 +94,7 @@ class DSL::English::DataAcquistionWorkflows::FSM
         # If it cannot be parsed, show message
         # Maybe ...
 
-        if not so $pres<list-management-command> {
+        if not so $pres {
             return 'WaitForRequest';
         }
 
@@ -124,9 +121,22 @@ class DSL::English::DataAcquistionWorkflows::FSM
 
         }
 
+        my $lastDataset = $!dataset.clone;
+
         # Get new dataset
+        &.ECHOLOGGING.("Parsed: {$!itemSpec.gist}");
         if $!itemSpec<list-management-command> {
+
             $!dataset = $!itemSpec.made;
+
+        } elsif $!itemSpec<workflow-commands-list> {
+
+            use MONKEY;
+            my $obj = $!dataset;
+            &.ECHOLOGGING.("Interpreted: {$!itemSpec.made}");
+            EVAL $!itemSpec.made;
+            $!dataset = $obj;
+
         }
 
         &.re-say.("$stateID: Obtained the records:");
@@ -136,14 +146,24 @@ class DSL::English::DataAcquistionWorkflows::FSM
             &.re-say.(to-pretty-table($!dataset));
         }
 
-        # No items
+        if $!dataset.elems == 0 {
+            # No items
+            &.re-say("Empty set was obtained. Reverting to previous value.");
+            $!dataset = $lastDataset;
 
-        # One item
-        if $!dataset ~~ Hash {
-            return "AcquireItem"
+            return 'WaitForRequest';
+
+        } elsif $!dataset ~~ Hash {
+            # One item
+
+            return 'AcquireItem';
+
+        } else {
+            # Many items
+
+            return 'WaitForRequest';
         }
 
-        # Many items
 
         return 'WaitForRequest';
     }
