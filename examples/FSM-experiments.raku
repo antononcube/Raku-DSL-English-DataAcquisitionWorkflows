@@ -6,6 +6,7 @@ use lib '.';
 use DSL::Shared::FiniteStateMachines::CoreFSM;
 use DSL::English::DataAcquisitionWorkflows::FSM;
 use Data::ExampleDatasets;
+use Data::Reshapers;
 
 #============================================================
 # Object
@@ -39,28 +40,25 @@ $daFSM.add-transition("WaitForRequest",   "quit",               "Exit");
 
 $daFSM.add-transition("PrioritizedList",  "priorityListGiven",  "WaitForRequest");
 
-$daFSM.add-transition("ListOfItems",      "manyItems",          "WaitForFilter");
+$daFSM.add-transition("ListOfItems",      "manyItems",          "WaitForRequest");
 $daFSM.add-transition("ListOfItems",      "noItems",            "WaitForRequest");
 $daFSM.add-transition("ListOfItems",      "uniqueItemObtained", "AcquireItem");
 
 $daFSM.add-transition("AcquireItem",      "startOver",          "WaitForRequest");
 
-$daFSM.add-transition("WaitForFilter",    "startOver",          "WaitForRequest");
-$daFSM.add-transition("WaitForFilter",    "filterInput",        "ListOfItems");
-$daFSM.add-transition("WaitForFilter",    "priority",           "PrioritizedList");
-$daFSM.add-transition("WaitForFilter",    "unrecognized",       "WaitForFilter");
-$daFSM.add-transition("WaitForFilter",    "help",               "Help");
-$daFSM.add-transition("WaitForFilter",    "quit",               "Exit");
-
 $daFSM.add-transition("Help",             "helpGiven",          "WaitForRequest");
-
-$daFSM.add-transition("WaitForFilter",    "tryDataQuery",       "ParseAsDataQuery");
-$daFSM.add-transition("ParseAsDataQuery", "unrecognized",       "WaitForFilter");
-$daFSM.add-transition("ParseAsDataQuery", "filterInput",        "ListOfItems");
-
 
 #--------------------------------------------------------
 # Run FSM
 #--------------------------------------------------------
 
-$daFSM.run('WaitForRequest');
+$daFSM.re-say = -> *@args { say |@args.map({ '⚙️' ~ $_.Str.subst(:g, "\n", "\n⚙️" )}) };
+$daFSM.ECHOLOGGING = -> *@args {};
+
+#$daFSM.run('WaitForRequest', ["take first five", "", "take the last one", "", ""]);
+$daFSM.run('WaitForRequest', ["filter by 'Title' starts with 'Air'", "", "show summary", "", "take the last one", "", ""]);
+#$daFSM.run('WaitForRequest');
+
+if $daFSM.acquiredData ~~ Array {
+    say to-pretty-table($daFSM.acquiredData);
+}
