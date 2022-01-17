@@ -22,12 +22,9 @@ $daFSM.dataset = get-datasets-metadata();
 $daFSM.add-state("WaitForRequest",   -> $obj { say "🔊 PLEASE enter item request."; });
 $daFSM.add-state("ListOfItems",      -> $obj { say "🔊 LISTING items."; });
 $daFSM.add-state("PrioritizedList",  -> $obj { say "🔊 PRIORITIZED dataset."; });
-$daFSM.add-state("WaitForFilter",    -> $obj { say "🔊 ENTER filter..."; });
 $daFSM.add-state("AcquireItem",      -> $obj { say "🔊 ACQUIRE dataset: ", $obj.dataset[0]; });
 $daFSM.add-state("Help",             -> $obj { say "🔊 HELP is help..."; });
 $daFSM.add-state("Exit",             -> $obj { say "🔊 SHUTTING down..."; });
-
-$daFSM.add-state("ParseAsDataQuery", -> $obj { say "🔊 PARSE as data query..."; });
 
 #--------------------------------------------------------
 # Transitions
