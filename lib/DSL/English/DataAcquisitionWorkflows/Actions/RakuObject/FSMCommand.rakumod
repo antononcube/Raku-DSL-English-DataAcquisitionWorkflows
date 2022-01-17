@@ -2,9 +2,9 @@ use Data::Reshapers;
 use Data::Summarizers;
 use Data::ExampleDatasets;
 use DSL::Shared::Actions::English::RakuObject::ListManagementCommand;
-
+use DSL::English::DataQueryWorkflows::Actions::Raku::Reshapers;
 
 class DSL::English::DataAcquisitionWorkflows::Actions::RakuObject::FSMGrammar
-        is DSL::Shared::Actions::English::RakuObject::ListManagementCommand {
+        is DSL::English::DataQueryWorkflows::Actions::Raku::Reshapers {
 
 }
