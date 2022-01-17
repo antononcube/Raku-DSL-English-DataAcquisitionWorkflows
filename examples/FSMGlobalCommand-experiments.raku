@@ -24,8 +24,7 @@ use Data::Summarizers;
 grammar FSMGlobalCommand
         is DSL::English::DataQueryWorkflows::Grammar
         does Lingua::NumericWordForms::Roles::English::WordedNumberSpec
-        does DSL::Shared::Roles::English::GlobalCommand
-        does DSL::Shared::Roles::English::ListManagementCommand {
+        does DSL::Shared::Roles::English::GlobalCommand {
     rule TOP {
         <.display-directive>? <list-management-command> | <global-command> | <workflow-commands-list>
     }
@@ -36,7 +35,9 @@ my @temp = random-tabular-dataset( 12, <axiom theorem conjecture lemma corollary
 
 say to-pretty-table(@temp);
 
-my $input = "select the columns lemma and axiom; filter by axiom is like rx/ <[A..M]> .* /; echo pipeline value; summarize";
+#my $input = "select the columns lemma and axiom; filter by axiom is like rx/ <[A..M]> .* /; echo pipeline value; summarize";
+my $input = "select the columns lemma and axiom; filter by axiom starts with 'M'; echo pipeline value; summarize";
+#my $input = "show top 5 elements";
 
 my $manager = DSL::English::DataAcquisitionWorkflows::Actions::RakuObject::FSMGrammar.new(object => @temp.clone);
 
