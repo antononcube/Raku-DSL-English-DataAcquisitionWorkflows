@@ -6,7 +6,7 @@ use DSL::Shared::Roles::English::GlobalCommand;
 use DSL::Shared::Roles::English::ListManagementCommand;
 use DSL::English::DataQueryWorkflows::Grammar;
 use DSL::English::DataQueryWorkflows::Actions::Raku::Reshapers;
-use DSL::English::DataAcquisitionWorkflows::Actions::RakuObject::FSMCommand;
+use DSL::English::DataAcquisitionWorkflows::Actions::Raku::FSMCommand;
 use Lingua::NumericWordForms::Roles::English::WordedNumberSpec;
 
 my @datasetMetadata = get-datasets-metadata();
@@ -45,7 +45,7 @@ class DSL::English::DataAcquistionWorkflows::FSM
         }
 
         # Check was "global" command was entered. E.g."start over".
-        my $manager = DSL::English::DataAcquisitionWorkflows::Actions::RakuObject::FSMGrammar.new( object => $!dataset.clone);
+        my $manager = DSL::English::DataAcquisitionWorkflows::Actions::Raku::FSMGrammar.new( object => $!dataset.clone);
         my $pres = FSMGlobalCommand.parse($input, rule => 'TOP', actions => $manager);
 
         &.ECHOLOGGING.("$stateID: Global commad parsing result: ", $pres);
