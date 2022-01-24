@@ -62,15 +62,15 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::RandomDataGeneration {
 
     rule random-tabular-dataset-max-number-of-values-spec {
         <?{ $*MAXNUMOFVALUES == 0 }> [
-          <.maximum>? <.number-of> <.values-noun> <integer-value> |
-          <integer-value> <.maximum>? <.number-of> <.values-noun>
+          <.maximum>? <.number-of> [ <.values-noun> | <.elements-noun> ] <integer-value> |
+          <integer-value> <.maximum>? <.number-of> [ <.values-noun> | <.elements-noun> ]
         ] { $*MAXNUMOFVALUES = 1 }
     }
 
     rule random-tabular-dataset-min-number-of-values-spec {
         <?{ $*MINNUMOFVALUES == 0 }> [
-          <.minimum> <.number-of> <.values-noun> <integer-value> |
-          <integer-value> <.minimum> <.number-of> <.values-noun>
+          <.minimum> <.number-of> [ <.values-noun> | <.elements-noun> ] <integer-value> |
+          <integer-value> <.minimum> <.number-of> [ <.values-noun> | <.elements-noun> ]
         ] { $*MINNUMOFVALUES = 1 }
     }
 
