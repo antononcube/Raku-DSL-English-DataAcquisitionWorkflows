@@ -159,7 +159,7 @@ class DSL::English::DataAcquisitionWorkflows::Actions::Raku::Ecosystem
                 elsif $actionPred.chars > 0 { $actionPred }
                 else {'' }
 
-        make 'sbrDataAcquisitions' ~ self.separator() ~
+        make '$sbrDataAcquisitions' ~ self.separator() ~
                 '.recommendByProfile(' ~ $prof ~ $nrecs ~ ').joinAcross.takeValue'
     }
 
@@ -219,7 +219,7 @@ class DSL::English::DataAcquisitionWorkflows::Actions::Raku::Ecosystem
         }
 
         #make to_DSL_code('USE TARGET SMRMon-R; use smrDataAcquisitions; recommend by profile ' ~ @resProfile.join(', ') ~ '; echo pipeline value;');
-        make 'sbrDataAcquisitions' ~ self.separator() ~
+        make '$sbrDataAcquisitions' ~ self.separator() ~
                 'recommendByProfile( [' ~ @resProfile.join(', ') ~ ']' ~ $nrecs ~ ').joinAcross.takeValue';
     }
 
@@ -339,6 +339,6 @@ class DSL::English::DataAcquisitionWorkflows::Actions::Raku::Ecosystem
 
     # Setup code commend
     method setup-code-command($/) {
-        make 'SETUPCODE' => 'say "Import/create sbrDataAcquisitions";'
+        make 'SETUPCODE' => 'say "Import/create $sbrDataAcquisitions";'
     }
 }
