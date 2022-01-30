@@ -34,6 +34,10 @@ my %targetToAction{Str} =
     "WL-System"        => DSL::English::DataAcquisitionWorkflows::Actions::WL::System,
     "Bulgarian"        => DSL::English::DataAcquisitionWorkflows::Actions::Bulgarian::Standard;
 
+my %targetToAction2{Str} = %targetToAction.grep({ $_.key.contains('-') }).map({ $_.key.subst('-', '::') => $_.value }).Hash;
+%targetToAction = |%targetToAction , |%targetToAction2;
+
+
 my Str %targetToSeparator{Str} =
     "Julia"            => "\n",
     "Julia-DataFrames" => "\n",
@@ -46,11 +50,9 @@ my Str %targetToSeparator{Str} =
     "WL-System"        => " \\[DoubleLongRightArrow]\n",
     "Bulgarian"        => "\n";
 
+my Str %targetToSeparator2{Str} = %targetToSeparator.grep({ $_.key.contains('-') }).map({ $_.key.subst('-', '::') => $_.value }).Hash;
+%targetToSeparator = |%targetToSeparator , |%targetToSeparator2;
 
-#-----------------------------------------------------------
-sub has-semicolon (Str $word) {
-    return defined index $word, ';';
-}
 
 #-----------------------------------------------------------
 proto ToDataAcquisitionWorkflowCode(Str $command, Str $target = 'WL-System', | ) is export {*}
