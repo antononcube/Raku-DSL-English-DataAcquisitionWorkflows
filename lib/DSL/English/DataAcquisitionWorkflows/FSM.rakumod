@@ -148,7 +148,7 @@ class DSL::English::DataAcquistionWorkflows::FSM
 
         if $!dataset.elems == 0 {
             # No items
-            &.re-say("Empty set was obtained. Reverting to previous value.");
+            &.re-say.("Empty set was obtained. Reverting to previous value.");
             $!dataset = $lastDataset;
 
             return 'WaitForRequest';
@@ -191,7 +191,8 @@ class DSL::English::DataAcquistionWorkflows::FSM
         &.ECHOLOGGING.(@transitions.raku.Str);
 
         &.re-say.("Acquiring data : ", $!dataset<Title>);
-        $!acquiredData = example-dataset( $!dataset<Package> ~ '::' ~ $!dataset<Item> ):keep;
+        my $query = $!dataset<Package> ~ '::' ~ $!dataset<Item>;
+        $!acquiredData = example-dataset( / <{ $query }> $ / ):keep;
 
         return 'Exit';
     }
