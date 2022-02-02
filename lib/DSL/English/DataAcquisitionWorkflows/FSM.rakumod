@@ -136,7 +136,13 @@ class DSL::English::DataAcquistionWorkflows::FSM
             &.ECHOLOGGING.("Interpreted: {$!itemSpec.made}");
             EVAL $!itemSpec.made;
             $!dataset = $obj;
+            if $!dataset ~~ Seq { $!dataset = $!dataset.Array }
 
+        }
+
+        if $lastDataset eqv $!dataset {
+            &.re-say.("$stateID: Pipeline value was not changed.");
+            return 'WaitForRequest';
         }
 
         &.re-say.("$stateID: Obtained the records:");
@@ -153,7 +159,7 @@ class DSL::English::DataAcquistionWorkflows::FSM
 
             return 'WaitForRequest';
 
-        } elsif $!dataset ~~ Hash {
+        } elsif $!dataset ~~ Hash or $!dataset.elems == 1 {
             # One item
 
             return 'AcquireItem';
@@ -190,8 +196,15 @@ class DSL::English::DataAcquistionWorkflows::FSM
 
         &.ECHOLOGGING.(@transitions.raku.Str);
 
+        # The parser/ actions <list-management-command> might produce a table with one row
+        # or just the hash corresponding to that row.
+        # If the former take the content of the table.
+        if $!dataset ~~ Array {
+            $!dataset = $!dataset.values[0];
+        }
+
         &.re-say.("Acquiring data : ", $!dataset<Title>);
-        my $query = $!dataset<Package> ~ '::' ~ $!dataset<Item>;
+        my $query = '\'' ~ $!dataset<Package> ~ '::' ~ $!dataset<Item> ~ '\'';
         $!acquiredData = example-dataset( / <{ $query }> $ / ):keep;
 
         return 'Exit';
