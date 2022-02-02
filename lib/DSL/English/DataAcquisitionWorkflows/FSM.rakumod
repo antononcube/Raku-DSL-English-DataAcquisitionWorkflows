@@ -22,12 +22,22 @@ class DSL::English::DataAcquistionWorkflows::FSM
     has $.itemSpecCommand;
 
     #--------------------------------------------------------
+    # Metadata set predicate
+    method is-metadata-row( $data ) {
+        return $data ~~ Hash && ($data.keys (&) <Title Rows Cols CSV Doc>).elems == 5;
+    }
+
+    method is-metadata-dataset( $data ) {
+        return ($data ~~ Array) && ([and] $data.map({ self.is-metadata-row($_) }));
+    }
+
+    #--------------------------------------------------------
     # Global command
     grammar FSMGlobalCommand
             is DSL::English::DataQueryWorkflows::Grammar
             does Lingua::NumericWordForms::Roles::English::WordedNumberSpec
             does DSL::Shared::Roles::English::GlobalCommand {
-        rule TOP { <.display-directive>? <list-management-command> | <global-command> | <workflow-commands-list> }
+        rule TOP { <.display-directive>? <list-management-command> || <global-command> || <workflow-commands-list> }
     };
 
     #--------------------------------------------------------
@@ -59,6 +69,8 @@ class DSL::English::DataAcquistionWorkflows::FSM
         } elsif $pres<global-command><global-cancel> {
 
             &.re-say.("$stateID: Starting over.");
+
+            $!dataset = @datasetMetadata.clone;
 
             return 'WaitForRequest';
 
@@ -114,7 +126,7 @@ class DSL::English::DataAcquistionWorkflows::FSM
         &.ECHOLOGGING.(@transitions.raku.Str);
         &.ECHOLOGGING.("$stateID: itemSpec => $!itemSpec");
 
-        if $!itemSpec<global-show-all> {
+        if $!itemSpec<global-command><global-show-all> {
 
             &.re-say.(to-pretty-table($!dataset));
             return "WaitForRequest";
@@ -125,11 +137,7 @@ class DSL::English::DataAcquistionWorkflows::FSM
 
         # Get new dataset
         &.ECHOLOGGING.("Parsed: {$!itemSpec.gist}");
-        if $!itemSpec<list-management-command> {
-
-            $!dataset = $!itemSpec.made;
-
-        } elsif $!itemSpec<workflow-commands-list> {
+        if $!itemSpec<list-management-command> || $!itemSpec<workflow-commands-list> {
 
             use MONKEY;
             my $obj = $!dataset;
@@ -146,9 +154,14 @@ class DSL::English::DataAcquistionWorkflows::FSM
         }
 
         &.re-say.("$stateID: Obtained the records:");
-        if $!dataset ~~ Hash {
+        #`(
+        say '$!dataset : ', $!dataset.raku;
+        say 'self.is-metadata-row($!dataset) : ', self.is-metadata-row($!dataset);
+        say 'self.is-metadata-dataset($!dataset) : ', self.is-metadata-dataset($!dataset);
+        )
+        if self.is-metadata-row($!dataset) {
             &.re-say.(to-pretty-table([$!dataset,]))
-        } else {
+        } elsif self.is-metadata-dataset($!dataset) {
             &.re-say.(to-pretty-table($!dataset));
         }
 
@@ -159,7 +172,7 @@ class DSL::English::DataAcquistionWorkflows::FSM
 
             return 'WaitForRequest';
 
-        } elsif $!dataset ~~ Hash or $!dataset.elems == 1 {
+        } elsif self.is-metadata-row($!dataset) || self.is-metadata-dataset($!dataset) && $!dataset.elems == 1 {
             # One item
 
             return 'AcquireItem';
