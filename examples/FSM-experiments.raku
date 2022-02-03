@@ -12,38 +12,9 @@ use Data::Reshapers;
 # Object
 #============================================================
 
-my DSL::English::DataAcquistionWorkflows::FSM $daFSM .= new;
+my DSL::English::DataAcquisitionWorkflows::FSM $daFSM .= new;
 
-$daFSM.dataset = get-datasets-metadata();
-
-#--------------------------------------------------------
-# States
-#--------------------------------------------------------
-$daFSM.add-state("WaitForRequest",   -> $obj { say "🔊 PLEASE enter item request."; });
-$daFSM.add-state("ListOfItems",      -> $obj { say "🔊 LISTING items."; });
-$daFSM.add-state("PrioritizedList",  -> $obj { say "🔊 PRIORITIZED dataset."; });
-$daFSM.add-state("AcquireItem",      -> $obj { say "🔊 ACQUIRE dataset: ", $obj.dataset[0]; });
-$daFSM.add-state("Help",             -> $obj { say "🔊 HELP is help..."; });
-$daFSM.add-state("Exit",             -> $obj { say "🔊 SHUTTING down..."; });
-
-#--------------------------------------------------------
-# Transitions
-#--------------------------------------------------------
-$daFSM.add-transition("WaitForRequest",   "itemSpec",           "ListOfItems");
-$daFSM.add-transition("WaitForRequest",   "startOver",          "WaitForRequest");
-$daFSM.add-transition("WaitForRequest",   "priority",           "PrioritizedList");
-$daFSM.add-transition("WaitForRequest",   "help",               "Help");
-$daFSM.add-transition("WaitForRequest",   "quit",               "Exit");
-
-$daFSM.add-transition("PrioritizedList",  "priorityListGiven",  "WaitForRequest");
-
-$daFSM.add-transition("ListOfItems",      "manyItems",          "WaitForRequest");
-$daFSM.add-transition("ListOfItems",      "noItems",            "WaitForRequest");
-$daFSM.add-transition("ListOfItems",      "uniqueItemObtained", "AcquireItem");
-
-$daFSM.add-transition("AcquireItem",      "startOver",          "WaitForRequest");
-
-$daFSM.add-transition("Help",             "helpGiven",          "WaitForRequest");
+$daFSM.make-machine;
 
 #--------------------------------------------------------
 # Run FSM
@@ -53,7 +24,10 @@ $daFSM.re-say = -> *@args { say |@args.map({ '⚙️' ~ $_.Str.subst(:g, "\n", "
 $daFSM.ECHOLOGGING = -> *@args {};
 
 #$daFSM.run('WaitForRequest', ["take first five", "", "take the last one", "", ""]);
-$daFSM.run('WaitForRequest', ["filter by 'Title' starts with 'Air'", "", "show summary", "", "take the last one", "", ""]);
+#$daFSM.run('WaitForRequest', ["filter by 'Title' starts with 'Air'", "", "show summary", "", "take the last one", "", ""]);
+#$daFSM.run('WaitForRequest', ["show summary", "", "take top five", "", "take the last one", "", ""]);
+$daFSM.run('WaitForRequest', ["show summary", "", "group by Rows; show counts", "", "start over", "take last twelve", "", "quit"]);
+#$daFSM.run('WaitForRequest', ["show summary", "", "take top 5", "", "quit"]);
 #$daFSM.run('WaitForRequest');
 
 if $daFSM.acquiredData ~~ Array {
