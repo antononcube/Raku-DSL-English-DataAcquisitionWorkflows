@@ -11,7 +11,7 @@ use Lingua::NumericWordForms::Roles::English::WordedNumberSpec;
 
 my @datasetMetadata = get-datasets-metadata();
 
-class DSL::English::DataAcquistionWorkflows::FSM
+class DSL::English::DataAcquisitionWorkflows::FSM
         is DSL::Shared::FiniteStateMachines::CoreFSM {
 
     #--------------------------------------------------------
@@ -235,4 +235,50 @@ class DSL::English::DataAcquistionWorkflows::FSM
         # Should we ever be here?!
         return 'None';
     }
+
+    #--------------------------------------------------------
+    method make-machine() {
+
+        self.dataset = get-datasets-metadata(deepcopy=>True);
+
+        #--------------------------------------------------------
+        # States
+        #--------------------------------------------------------
+        self.add-state("WaitForRequest",   -> $obj { say "🔊 PLEASE enter item request."; });
+        self.add-state("ListOfItems",      -> $obj { say "🔊 LISTING items."; });
+        self.add-state("PrioritizedList",  -> $obj { say "🔊 PRIORITIZED dataset."; });
+        self.add-state("AcquireItem",      -> $obj { say "🔊 ACQUIRE dataset: ", $obj.dataset[0]; });
+        self.add-state("Help",             -> $obj { say "🔊 HELP is help..."; });
+        self.add-state("Exit",             -> $obj { say "🔊 SHUTTING down..."; });
+
+        #--------------------------------------------------------
+        # Transitions
+        #--------------------------------------------------------
+        self.add-transition("WaitForRequest",   "itemSpec",           "ListOfItems");
+        self.add-transition("WaitForRequest",   "startOver",          "WaitForRequest");
+        self.add-transition("WaitForRequest",   "priority",           "PrioritizedList");
+        self.add-transition("WaitForRequest",   "help",               "Help");
+        self.add-transition("WaitForRequest",   "quit",               "Exit");
+
+        self.add-transition("PrioritizedList",  "priorityListGiven",  "WaitForRequest");
+
+        self.add-transition("ListOfItems",      "manyItems",          "WaitForRequest");
+        self.add-transition("ListOfItems",      "noItems",            "WaitForRequest");
+        self.add-transition("ListOfItems",      "uniqueItemObtained", "AcquireItem");
+
+        self.add-transition("AcquireItem",      "startOver",          "WaitForRequest");
+
+        self.add-transition("Help",             "helpGiven",          "WaitForRequest");
+
+        #--------------------------------------------------------
+        # Loggers
+        #--------------------------------------------------------
+
+        self.re-say = -> *@args { say |@args.map({ '⚙️' ~ $_.Str.subst(:g, "\n", "\n⚙️" )}) };
+        self.ECHOLOGGING = -> *@args {};
+
+        # Result
+        return self;
+    }
+
 }
