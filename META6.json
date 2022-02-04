@@ -35,7 +35,9 @@
     "DSL::English::DataAcquisitionWorkflows::Grammar::RandomDataGeneration": "lib/DSL/English/DataAcquisitionWorkflows/Grammar/RandomDataGeneration.rakumod",
     "DSL::English::DataAcquisitionWorkflows::Grammar::RecommendationsCommand": "lib/DSL/English/DataAcquisitionWorkflows/Grammar/RecommendationsCommand.rakumod"
   },
-  "resources": [],
+  "resources": [
+    "default.Rproj"
+  ],
   "license": "GPL-3.0-or-later",
   "tags": [
     "data",
