@@ -28,6 +28,7 @@ $daFSM.ECHOLOGGING = -> *@args {};
 # Run FSM
 #--------------------------------------------------------
 
+#$daFSM.run('WaitForRequest', ["show summary", "", "group by Rows; show counts", "", "start over", "take last twelve", "", "quit"]);
 $daFSM.run('WaitForRequest');
 
 #if $daFSM.acquiredData ~~ Array {
