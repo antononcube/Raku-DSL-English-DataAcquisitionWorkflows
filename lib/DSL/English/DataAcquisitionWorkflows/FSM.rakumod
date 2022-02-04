@@ -8,6 +8,8 @@ use DSL::English::DataQueryWorkflows::Grammar;
 use DSL::English::DataQueryWorkflows::Actions::Raku::Reshapers;
 use DSL::English::DataAcquisitionWorkflows::Actions::Raku::FSMCommand;
 use Lingua::NumericWordForms::Roles::English::WordedNumberSpec;
+use Text::CSV;
+use XDG::BaseDirectory :terms;
 
 my @datasetMetadata = get-datasets-metadata();
 
@@ -218,8 +220,52 @@ class DSL::English::DataAcquisitionWorkflows::FSM
 
         &.re-say.("Acquiring data : ", $!dataset<Title>);
         my $query = '\'' ~ $!dataset<Package> ~ '::' ~ $!dataset<Item> ~ '\'';
+        $!itemSpec = $!dataset<Package> ~ '::' ~ $!dataset<Item>;
         $!acquiredData = example-dataset( / <{ $query }> $ / ):keep;
 
+        return 'ExportData';
+    }
+
+    #--------------------------------------------------------
+    multi method choose-transition(Str $stateID where $_ ~~ 'ExportData',
+                                   $input is copy = Whatever, UInt $maxLoops = 5 --> Str) {
+        # Prompt selection menu
+        &.re-say.( "Export dataset as [1] R-project, [2] WL-notebook, [3] Raku-package, or [4] No export\n(choose one...)");
+
+        # Get selection
+        my $n;
+        loop {
+            $n = val get;
+            last if $n ~~ Int && $n ~~ 1..3;
+            say "Invalid input; try again.";
+        }
+
+        # Compute export names
+        my $dateTimeSuffix = DateTime.now(formatter => { sprintf "%04d-%02d-%02dT%02d-%02d-%02d", .year, .month, .day, .hour, .minute, .second }).Str;
+        my $projName = $!itemSpec.subst('::','-') ~ $dateTimeSuffix;
+
+        # R-project is selected
+        if $n == 1 {
+            my $dirName = data-home.Str ~ '/DataAcquisitionFSM/rstudio';
+            $dirName ~= '/' ~ $projName;
+
+            # Create the package
+            shell "mkdir -p $dirName";
+            shell "R -e 'usethis::create_project(path=\"$dirName\")'";
+
+            # Put in the data
+            shell "mkdir $dirName/data";
+            my $rproj = slurp %?RESOURCES<default.Rproj>;
+            csv(in => $!acquiredData, out => "$dirName/data/dataset.csv", sep => ',');
+
+            # Copy the R-project files
+            spurt("$dirName/$projName.Rproj", $rproj);
+
+            # Open
+            shell "open $dirName/$projName.Rproj"
+        }
+
+        # Goto Exit state
         return 'Exit';
     }
 
@@ -248,6 +294,7 @@ class DSL::English::DataAcquisitionWorkflows::FSM
         self.add-state("ListOfItems",      -> $obj { say "🔊 LISTING items."; });
         self.add-state("PrioritizedList",  -> $obj { say "🔊 PRIORITIZED dataset."; });
         self.add-state("AcquireItem",      -> $obj { say "🔊 ACQUIRE dataset: ", $obj.dataset[0]; });
+        self.add-state("ExportData",       -> $obj { say "🔊 EXPORT dataset: ", $obj.dataset[0]; });
         self.add-state("Help",             -> $obj { say "🔊 HELP is help..."; });
         self.add-state("Exit",             -> $obj { say "🔊 SHUTTING down..."; });
 
@@ -266,7 +313,8 @@ class DSL::English::DataAcquisitionWorkflows::FSM
         self.add-transition("ListOfItems",      "noItems",            "WaitForRequest");
         self.add-transition("ListOfItems",      "uniqueItemObtained", "AcquireItem");
 
-        self.add-transition("AcquireItem",      "startOver",          "WaitForRequest");
+        self.add-transition("AcquireItem",      "export",             "ExportData");
+        self.add-transition("ExportData",       "startOver",          "WaitForRequest");
 
         self.add-transition("Help",             "helpGiven",          "WaitForRequest");
 
