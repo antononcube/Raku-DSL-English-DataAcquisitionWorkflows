@@ -313,8 +313,8 @@ class DSL::English::DataAcquisitionWorkflows::FSM
         self.add-transition("ListOfItems",      "noItems",            "WaitForRequest");
         self.add-transition("ListOfItems",      "uniqueItemObtained", "AcquireItem");
 
-        self.add-transition("AcquireItem",      "export",             "ExportData");
-        self.add-transition("ExportData",       "startOver",          "WaitForRequest");
+        self.add-transition("AcquireItem",      "acquired",             "ExportData");
+        self.add-transition("ExportData",       "exported",             "Exit");
 
         self.add-transition("Help",             "helpGiven",          "WaitForRequest");
 
