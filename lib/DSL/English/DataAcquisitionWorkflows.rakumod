@@ -26,6 +26,7 @@ use DSL::English::DataAcquisitionWorkflows::Actions::WL::System;
 
 #-----------------------------------------------------------
 my %targetToAction{Str} =
+    "Bulgarian"         => DSL::English::DataAcquisitionWorkflows::Actions::Bulgarian::Standard,
     "Mathematica"       => DSL::English::DataAcquisitionWorkflows::Actions::WL::System,
     "Python"            => DSL::English::DataAcquisitionWorkflows::Actions::Python::Ecosystem,
     "Python-Ecosystem"  => DSL::English::DataAcquisitionWorkflows::Actions::Python::Ecosystem,
@@ -34,23 +35,22 @@ my %targetToAction{Str} =
     "Raku"              => DSL::English::DataAcquisitionWorkflows::Actions::Raku::Ecosystem,
     "Raku-Ecosystem"    => DSL::English::DataAcquisitionWorkflows::Actions::Raku::Ecosystem,
     "WL"                => DSL::English::DataAcquisitionWorkflows::Actions::WL::System,
-    "WL-System"         => DSL::English::DataAcquisitionWorkflows::Actions::WL::System,
-    "Bulgarian"         => DSL::English::DataAcquisitionWorkflows::Actions::Bulgarian::Standard;
+    "WL-System"         => DSL::English::DataAcquisitionWorkflows::Actions::WL::System;
 
 my %targetToAction2{Str} = %targetToAction.grep({ $_.key.contains('-') }).map({ $_.key.subst('-', '::') => $_.value }).Hash;
 %targetToAction = |%targetToAction , |%targetToAction2;
 
 
 my Str %targetToSeparator{Str} =
+    "Bulgarian"         => "\n",
+    "Mathematica"       => " \\[DoubleLongRightArrow]\n",
     "Python"            => "\n",
     "Python-Ecosystem"  => "\n",
     "R"                 => " ;\n",
     "Raku"              => " ;\n",
     "Raku-Ecosystem"    => " ;\n",
-    "Mathematica"       => " \\[DoubleLongRightArrow]\n",
     "WL"                => " \\[DoubleLongRightArrow]\n",
-    "WL-System"         => " \\[DoubleLongRightArrow]\n",
-    "Bulgarian"         => "\n";
+    "WL-System"         => " \\[DoubleLongRightArrow]\n";
 
 my Str %targetToSeparator2{Str} = %targetToSeparator.grep({ $_.key.contains('-') }).map({ $_.key.subst('-', '::') => $_.value }).Hash;
 %targetToSeparator = |%targetToSeparator , |%targetToSeparator2;
