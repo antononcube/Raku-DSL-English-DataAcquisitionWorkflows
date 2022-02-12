@@ -230,13 +230,13 @@ class DSL::English::DataAcquisitionWorkflows::FSM
     multi method choose-transition(Str $stateID where $_ ~~ 'ExportData',
                                    $input is copy = Whatever, UInt $maxLoops = 5 --> Str) {
         # Prompt selection menu
-        &.re-say.( "Export dataset as [1] R-project, [2] WL-notebook, [3] Raku-package, or [4] No export\n(choose one...)");
+        &.re-say.( "Export dataset as [1] R-project, [2] WL-notebook, [3] Raku-package, [4] Microsoft Excel file, or [5] No export\n(choose one...)");
 
         # Get selection
         my $n;
         loop {
             $n = val get;
-            last if $n ~~ Int && $n ~~ 1..3;
+            last if $n ~~ Int && $n ~~ 1..5;
             say "Invalid input; try again.";
         }
 
@@ -244,8 +244,9 @@ class DSL::English::DataAcquisitionWorkflows::FSM
         my $dateTimeSuffix = DateTime.now(formatter => { sprintf "%04d-%02d-%02dT%02d-%02d-%02d", .year, .month, .day, .hour, .minute, .second }).Str;
         my $projName = $!itemSpec.subst('::','-') ~ $dateTimeSuffix;
 
-        # R-project is selected
+        # Export actions
         if $n == 1 {
+            # R-project is selected
             my $dirName = data-home.Str ~ '/DataAcquisitionFSM/rstudio';
             $dirName ~= '/' ~ $projName;
 
@@ -263,10 +264,26 @@ class DSL::English::DataAcquisitionWorkflows::FSM
 
             # Open
             shell "open $dirName/$projName.Rproj"
+
+        } elsif $n == 4 {
+            # Microsoft Excel is selected
+
+            my $dirName = data-home.Str ~ '/DataAcquisitionFSM/MSExcel';
+            $dirName ~= '/' ~ $projName;
+
+            # Create the package
+            shell "mkdir -p $dirName";
+
+            # Put in the data
+            my $rproj = slurp %?RESOURCES<default.Rproj>;
+            csv(in => $!acquiredData, out => "$dirName/$projName.csv", sep => ',');
+
+            # Open
+            shell "open $dirName/$projName.csv"
         }
 
-        # Goto Exit state
-        return 'Exit';
+        # Goto Exit state or stay
+        return $n < 5 ?? 'ExportData' !! 'Exit';
     }
 
     #--------------------------------------------------------
