@@ -275,7 +275,6 @@ class DSL::English::DataAcquisitionWorkflows::FSM
             shell "mkdir -p $dirName";
 
             # Put in the data
-            my $rproj = slurp %?RESOURCES<default.Rproj>;
             csv(in => $!acquiredData, out => "$dirName/$projName.csv", sep => ',');
 
             # Open
