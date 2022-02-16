@@ -1,3 +1,11 @@
+=head1 Finite State Machine (FSM) class for data acquisition
+
+=begin para
+The code of this class is obsolete. It is kept for reference purposes.
+The new FSM data acquisition class(es) are in DSL::FiniteStateMachines.
+=end para
+
+
 use Data::Reshapers;
 use Data::Summarizers;
 use Data::ExampleDatasets;
@@ -300,6 +308,7 @@ class DSL::English::DataAcquisitionWorkflows::FSM
 
     #--------------------------------------------------------
     method make-machine() {
+        note "This class is obsolete. Using the classes in DSL::FniniteStateMachines.";
 
         self.dataset = get-datasets-metadata(deepcopy=>True);
 
