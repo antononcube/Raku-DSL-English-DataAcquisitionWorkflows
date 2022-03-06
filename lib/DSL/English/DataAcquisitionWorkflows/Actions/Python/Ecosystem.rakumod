@@ -47,6 +47,8 @@ class DSL::English::DataAcquisitionWorkflows::Actions::Python::Ecosystem
     ##=====================================================
     has Str $.userID;
 
+    has DSL::Entity::Metadata::ResourceAccess $.resources;
+
     method makeUserIDTag() {
         ( ! $.userID.defined or $.userID.chars == 0 or $.userID (elem) <NONE NULL>) ?? '' !! '"UserID:' ~ $.userID ~ '"';
     }

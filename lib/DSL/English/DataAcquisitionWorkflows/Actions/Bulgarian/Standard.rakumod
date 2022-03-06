@@ -47,6 +47,8 @@ class DSL::English::DataAcquisitionWorkflows::Actions::Bulgarian::Standard
     ##=====================================================
     has Str $.userID;
 
+    has DSL::Entity::Metadata::ResourceAccess $.resources;
+
     method makeUserIDTag() {
         ( ! $.userID.defined or $.userID.chars == 0 or $.userID (elem) <NONE NULL>) ?? '' !! '"' ~ $.userID ~ '"';
     }
@@ -159,8 +161,8 @@ class DSL::English::DataAcquisitionWorkflows::Actions::Bulgarian::Standard
     method recommendations-by-profile-command($/) {
         my Str @resProfile;
 
-        if $<data-quality-spec> {
-             @resProfile.append($<data-quality-spec>.made)
+        if $<data-with-quality-spec-list> {
+             @resProfile.append($<data-with-quality-spec-list>.made)
         }
 
         if $<period-acquisition-spec> {
@@ -205,8 +207,20 @@ class DSL::English::DataAcquisitionWorkflows::Actions::Bulgarian::Standard
         make $/.Str.lc;
     }
 
-    method data-quality-spec($/) {
+    method data-with-quality-spec-list($/) {
         make 'Свойствата включват: ' ~ $/.values>>.made.join(', ');
+    }
+
+    method data-with-quality-spec($/) {
+        make $/.values[0].made ~ ' данни';
+    }
+
+    method data-quality-spec-list($/) {
+        make 'Свойствата включват: ' ~ $/.values>>.made.join(', ');
+    }
+
+    method data-quality-spec($/) {
+        make $/.values[0].made;
     }
 
     method data-property-spec($/) {

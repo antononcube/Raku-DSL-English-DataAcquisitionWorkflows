@@ -55,6 +55,11 @@ grammar DSL::English::DataAcquisitionWorkflows::Grammar
         does DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
         does DSL::English::DataAcquisitionWorkflows::Grammar::RandomDataGeneration {
 
+    my DSL::Entity::Metadata::ResourceAccess $resources;
+
+    method get-resources(--> DSL::Entity::Metadata::ResourceAccess) { return $resources; }
+    method set-resources(DSL::Entity::Metadata::ResourceAccess $obj) { $resources = $obj; }
+
     # TOPa
     rule TOP {
         <pipeline-command> ||

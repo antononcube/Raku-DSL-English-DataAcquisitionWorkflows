@@ -17,6 +17,8 @@ unit module DSL::English::DataAcquisitionWorkflows;
 
 use DSL::Shared::Utilities::CommandProcessing;
 
+use DSL::Entity::Metadata;
+
 use DSL::English::DataAcquisitionWorkflows::Grammar;
 use DSL::English::DataAcquisitionWorkflows::Actions::Bulgarian::Standard;
 use DSL::English::DataAcquisitionWorkflows::Actions::Python::Ecosystem;
@@ -61,10 +63,21 @@ proto ToDataAcquisitionWorkflowCode(Str $command, Str $target = 'WL-System', | )
 
 multi ToDataAcquisitionWorkflowCode ( Str $command, Str $target = 'WL-System', *%args ) {
 
+#    DSL::Shared::Utilities::CommandProcessing::ToWorkflowCode( $command,
+#                                                               grammar => DSL::English::DataAcquisitionWorkflows::Grammar,
+#                                                               :%targetToAction,
+#                                                               :%targetToSeparator,
+#                                                               :$target,
+#                                                               |%args );
+
+    my $pCOMMAND = DSL::English::DataAcquisitionWorkflows::Grammar;
+    $pCOMMAND.set-resources(DSL::Entity::Metadata::get-entity-resources-access-object());
+
+    my $ACTOBJ = %targetToAction{$target}.new(resources => DSL::Entity::Metadata::get-entity-resources-access-object());
+
     DSL::Shared::Utilities::CommandProcessing::ToWorkflowCode( $command,
-                                                               grammar => DSL::English::DataAcquisitionWorkflows::Grammar,
-                                                               :%targetToAction,
-                                                               :%targetToSeparator,
-                                                               :$target,
+                                                               grammar => $pCOMMAND,
+                                                               actions => $ACTOBJ,
+                                                               separator => %targetToSeparator{$target},
                                                                |%args )
 }
