@@ -1,9 +1,11 @@
 use lib './lib';
 use lib '.';
 use DSL::English::DataAcquisitionWorkflows;
+use DSL::Entity::Metadata;
 use Test;
 
 my $pCOMMAND = DSL::English::DataAcquisitionWorkflows::Grammar;
+$pCOMMAND.set-resources(DSL::Entity::Metadata::resource-access-object());
 
 ##===========================================================
 ## Sanity check commands
