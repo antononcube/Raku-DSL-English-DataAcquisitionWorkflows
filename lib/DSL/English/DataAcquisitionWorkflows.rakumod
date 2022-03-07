@@ -63,17 +63,10 @@ proto ToDataAcquisitionWorkflowCode(Str $command, Str $target = 'WL-System', | )
 
 multi ToDataAcquisitionWorkflowCode ( Str $command, Str $target = 'WL-System', *%args ) {
 
-#    DSL::Shared::Utilities::CommandProcessing::ToWorkflowCode( $command,
-#                                                               grammar => DSL::English::DataAcquisitionWorkflows::Grammar,
-#                                                               :%targetToAction,
-#                                                               :%targetToSeparator,
-#                                                               :$target,
-#                                                               |%args );
-
     my $pCOMMAND = DSL::English::DataAcquisitionWorkflows::Grammar;
-    $pCOMMAND.set-resources(DSL::Entity::Metadata::get-entity-resources-access-object());
+    $pCOMMAND.set-resources(DSL::Entity::Metadata::resource-access-object());
 
-    my $ACTOBJ = %targetToAction{$target}.new(resources => DSL::Entity::Metadata::get-entity-resources-access-object());
+    my $ACTOBJ = %targetToAction{$target}.new(resources => DSL::Entity::Metadata::resource-access-object());
 
     DSL::Shared::Utilities::CommandProcessing::ToWorkflowCode( $command,
                                                                grammar => $pCOMMAND,
