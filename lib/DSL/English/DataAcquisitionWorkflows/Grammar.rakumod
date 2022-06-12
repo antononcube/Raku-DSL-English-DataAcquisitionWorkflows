@@ -18,7 +18,7 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #   Written by Anton Antonov,
-#   antononcube @ posteo . net,
+#   ʇǝu˙oǝʇsod@ǝqnɔuouoʇuɐ,
 #   Windermere, Florida, USA.
 #
 #==============================================================================
@@ -28,7 +28,7 @@
 #==============================================================================
 =end comment
 
-use v6;
+use v6.d;
 
 use DSL::Shared::Roles::English::CommonParts;
 use DSL::Shared::Roles::English::TimeIntervalSpec;
