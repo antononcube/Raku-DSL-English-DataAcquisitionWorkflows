@@ -37,6 +37,7 @@ my %targetToAction{Str} =
     "Raku"              => DSL::English::DataAcquisitionWorkflows::Actions::Raku::Ecosystem,
     "Raku-Ecosystem"    => DSL::English::DataAcquisitionWorkflows::Actions::Raku::Ecosystem,
     "WL"                => DSL::English::DataAcquisitionWorkflows::Actions::WL::System,
+    "WL-Ecosystem"      => DSL::English::DataAcquisitionWorkflows::Actions::WL::System,
     "WL-System"         => DSL::English::DataAcquisitionWorkflows::Actions::WL::System;
 
 my %targetToAction2{Str} = %targetToAction.grep({ $_.key.contains('-') }).map({ $_.key.subst('-', '::') => $_.value }).Hash;
@@ -52,19 +53,25 @@ my Str %targetToSeparator{Str} =
     "Raku"              => " ;\n",
     "Raku-Ecosystem"    => " ;\n",
     "WL"                => " \\[DoubleLongRightArrow]\n",
+    "WL-Ecosystem"      => " \\[DoubleLongRightArrow]\n",
     "WL-System"         => " \\[DoubleLongRightArrow]\n";
 
 my Str %targetToSeparator2{Str} = %targetToSeparator.grep({ $_.key.contains('-') }).map({ $_.key.subst('-', '::') => $_.value }).Hash;
 %targetToSeparator = |%targetToSeparator , |%targetToSeparator2;
 
+#-----------------------------------------------------------
+sub DataAcquisitionWorkflowsGrammar() is export {
+    my $pCOMMAND = DSL::English::DataAcquisitionWorkflows::Grammar;
+    $pCOMMAND.set-resources(DSL::Entity::Metadata::resource-access-object());
+    return $pCOMMAND;
+}
 
 #-----------------------------------------------------------
 proto ToDataAcquisitionWorkflowCode(Str $command, Str $target = 'WL-System', | ) is export {*}
 
 multi ToDataAcquisitionWorkflowCode ( Str $command, Str $target = 'WL-System', *%args ) {
 
-    my $pCOMMAND = DSL::English::DataAcquisitionWorkflows::Grammar;
-    $pCOMMAND.set-resources(DSL::Entity::Metadata::resource-access-object());
+    my $pCOMMAND = DataAcquisitionWorkflowsGrammar();
 
     my $ACTOBJ = %targetToAction{$target}.new(resources => DSL::Entity::Metadata::resource-access-object());
 
