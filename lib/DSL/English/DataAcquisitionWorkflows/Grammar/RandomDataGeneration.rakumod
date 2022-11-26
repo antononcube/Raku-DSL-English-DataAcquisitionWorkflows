@@ -17,8 +17,10 @@ role DSL::English::DataAcquisitionWorkflows::Grammar::RandomDataGeneration {
         <.generate-directive>? <.a-determiner>? <.random-adjective> <.tabular-adjective>? <.dataset-phrase> <.filler-separator> <random-tabular-dataset-arguments-list>?
     }
 
+    regex filler-list-separator { [<list-separator> | <ws>] <filler-separator>? }
+
     regex random-tabular-dataset-arguments-list {
-        <random-tabular-dataset-argument>+ % [[<list-separator> | <ws>] <filler-separator>?]
+        <random-tabular-dataset-argument>+ % <filler-list-separator>
     }
 
     regex random-tabular-dataset-argument {
