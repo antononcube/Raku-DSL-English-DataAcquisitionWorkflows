@@ -1,15 +1,10 @@
-use v6;
+  use v6;
 
 use DSL::Shared::Roles::English::PipelineCommand;
-use DSL::Shared::Roles::English::CommonSpeechParts;
 use DSL::Shared::Utilities::FuzzyMatching;
 
-use DSL::Entity::Metadata::Grammar::EntityNames;
-
 # Food preparation specific phrases
-role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases
-        does DSL::Entity::Metadata::Grammar::EntityNames
-        does DSL::Shared::Roles::English::PipelineCommand {
+role DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases {
 
     rule recommend-phrase {
         [ <recommend-data-acqui-word> | <suggest-data-acqui-word> | <tell-data-acqui-word> ] <to-preposition>? <me-data-acqui-word>?

@@ -2,10 +2,8 @@ use v6;
 
 use DSL::Shared::Roles::English::PipelineCommand;
 use DSL::Shared::Utilities::FuzzyMatching;
-use DSL::Entity::Metadata::Grammar::EntityNames;
 
 role DSL::English::DataAcquisitionWorkflows::Grammar::IngredientSpec
-        does DSL::Entity::Metadata::Grammar::EntityNames
         does DSL::Shared::Roles::English::PipelineCommand {
 
     rule data-with-quality-spec-list { <.both-determiner>? <data-with-quality-spec>+ % <.list-separator> }
