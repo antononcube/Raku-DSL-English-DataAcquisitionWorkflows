@@ -1,24 +1,18 @@
 use lib './lib';
 use lib '.';
-
 use DSL::English::DataAcquisitionWorkflows;
 
-use DSL::English::DataAcquisitionWorkflows::Actions::Python::Ecosystem;
-use DSL::English::DataAcquisitionWorkflows::Actions::Raku::Ecosystem;
 use DSL::English::DataAcquisitionWorkflows::Actions::WL::System;
 
 my @testCommands = (
-#'recommend data to acquire',
+'recommend data to acquire',
 #'recommend time series data for pumps',
 #'recommend maintenance data for printers',
 #'recommend customer service data that has product descriptions',
-'create a random dataset with 5 columns and 2000 rows',
-'create a random dataset with five columns and two thousand rows and min number of elements 200',
+'create a random dataset with five columns and 2000 rows',
 #"take time series data for company's fuel pumps",
 #'what data did I worked with last month',
 #'USER ID ssj889afa; when is the last time worked with time series data',
-'how many times I acquired anatomical structure data last year',
-'how many times I used grocery store datasets in past year',
 #'show timeline of when I create random data',
 #'what did kind of data did I acquire last year',
 #'plot the timeline of my customer service data usage',
@@ -27,15 +21,17 @@ my @testCommands = (
 #'what are the outliers in column Col1 in the table Tbl1'
 );
 
-my @targets = <Python-Ecosystem>;
+my @targets = <Python-Ecosystem Raku-Ecosystem WL-System>;
 
 for @testCommands -> $c {
-    say "=" x 60;
+    say "=" x 120;
     say "command :\t", $c;
     for @targets -> $t {
+        say "-" x 120;
+        say $t;
         my $start = now;
         my $res = ToDataAcquisitionWorkflowCode($c ~ "\ninclude setup code", $t, format => 'hash');
-        say "interp. :\t", $res;
-        say $t, "\ttime: ", round(now - $start,0.0001);
+        say "interpretation :\t", $res;
+        say "time: ", round(now - $start,0.0001);
     }
 }
