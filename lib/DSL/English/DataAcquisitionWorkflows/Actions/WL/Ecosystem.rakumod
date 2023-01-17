@@ -45,7 +45,7 @@ class DSL::English::DataAcquisitionWorkflows::Actions::WL::Ecosystem
     ##=====================================================
     ## General
     ##=====================================================
-    has Str $.userID;
+    has Str $.userID is rw;
 
     has DSL::Entity::Metadata::ResourceAccess $.resources;
 
