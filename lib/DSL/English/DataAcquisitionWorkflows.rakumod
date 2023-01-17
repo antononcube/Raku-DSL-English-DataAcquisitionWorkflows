@@ -75,9 +75,14 @@ multi ToDataAcquisitionWorkflowCode ( Str $command, Str $target = 'WL-Ecosystem'
 
     my $ACTOBJ = %targetToAction{$target}.new(resources => DSL::Entity::Metadata::resource-access-object());
 
-    DSL::Shared::Utilities::CommandProcessing::ToWorkflowCode( $command,
-                                                               grammar => $pCOMMAND,
-                                                               actions => $ACTOBJ,
-                                                               separator => %targetToSeparator{$target},
-                                                               |%args )
+    if $target ∉ %targetToAction.keys {
+        die "No actions for the target $target."
+    }
+
+    DSL::Shared::Utilities::CommandProcessing::ToWorkflowCode($command,
+                                                              grammar => $pCOMMAND,
+                                                              targetToAction => %($target => $ACTOBJ),
+                                                              :%targetToSeparator,
+                                                              :$target,
+                                                              |%args )
 }
