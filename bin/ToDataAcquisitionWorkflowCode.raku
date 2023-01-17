@@ -9,7 +9,7 @@ my %*SUB-MAIN-OPTS =
 #| Conversion of (natural) DSL commands for data acquisition to code.
 sub MAIN
 ( Str $command, #= natural language command (DSL commands)
-  Str :$target = 'WL-System', #= target language/system/package (defaults to 'WL-System')
+  Str :$target = 'WL-Ecosystem', #= target language/system/package (defaults to 'WL-Ecosystem')
   Str :$user = '' #= user identifier (defaults to '')
  )
 {

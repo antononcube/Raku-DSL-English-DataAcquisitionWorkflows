@@ -1,7 +1,7 @@
 =begin comment
 #==============================================================================
 #
-#   Data Acquisition Workflows WL-System actions in Raku (Perl 6)
+#   Data Acquisition Workflows WL-Ecosystem actions in Raku (Perl 6)
 #   Copyright (C) 2021  Anton Antonov
 #
 #   This program is free software: you can redistribute it and/or modify
@@ -38,7 +38,7 @@ use DSL::Entity::Metadata::Actions::WL::System;
 
 use DSL::English::RecommenderWorkflows::Grammar;
 
-class DSL::English::DataAcquisitionWorkflows::Actions::WL::System
+class DSL::English::DataAcquisitionWorkflows::Actions::WL::Ecosystem
         is DSL::Shared::Actions::English::TimeIntervalSpec
         is DSL::Entity::Metadata::Actions::WL::System {
 

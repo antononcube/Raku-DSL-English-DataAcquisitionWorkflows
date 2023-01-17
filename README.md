@@ -40,7 +40,7 @@ use DSL::English::DataAcquisitionWorkflows;
 say ToDataAcquisitionWorkflowCode(
     "what data can I get for time series investigations?;
      why did you recommend those",
-    "WL-System");
+    "WL-Ecosystem");
 ``` 
 
 Recommendation request with subsequent filtering:
@@ -49,7 +49,7 @@ Recommendation request with subsequent filtering:
 say ToDataAcquisitionWorkflowCode(
     "I want to investigate data that cross references good purchases with customer demographics
      keep only datasets that can be transformed to star schema",
-    "WL-System");
+    "WL-Ecosystem");
 ``` 
 
 Data quality verification specification:
@@ -59,7 +59,7 @@ say ToDataAcquisitionWorkflowCode(
     "verify the quality of the database dbGJ99;
      what fraction of records have missing data;
      what are the distributions of the numerical columns",
-    "WL-System");
+    "WL-Ecosystem");
 ``` 
 
 Here is a more complicated, statistics pipeline specification:
@@ -80,7 +80,7 @@ say ToDataAcquisitionWorkflowCode(
     "what data people like me acquired last month;
      which of those I can use for classfier investigations;
      show me the data sizes and metadata;", 
-    "WL-System")
+    "WL-Ecosystem")
 ```
 
 ------

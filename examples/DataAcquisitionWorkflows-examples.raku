@@ -2,7 +2,7 @@ use lib './lib';
 use lib '.';
 use DSL::English::DataAcquisitionWorkflows;
 
-use DSL::English::DataAcquisitionWorkflows::Actions::WL::System;
+use DSL::English::DataAcquisitionWorkflows::Actions::WL::Ecosystem;
 
 my @testCommands = (
 'recommend data to acquire',
@@ -21,7 +21,7 @@ my @testCommands = (
 #'what are the outliers in column Col1 in the table Tbl1'
 );
 
-my @targets = <Python-Ecosystem Raku-Ecosystem WL-System>;
+my @targets = <Python-Ecosystem Raku-Ecosystem WL-Ecosystem>;
 
 for @testCommands -> $c {
     say "=" x 120;

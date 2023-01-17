@@ -2,7 +2,7 @@ use lib './lib';
 use lib '.';
 use DSL::English::DataAcquisitionWorkflows;
 
-use DSL::English::DataAcquisitionWorkflows::Actions::WL::System;
+use DSL::English::DataAcquisitionWorkflows::Actions::WL::Ecosystem;
 use DSL::English::DataAcquisitionWorkflows::Actions::R::base;
 use DSL::English::DataAcquisitionWorkflows::Actions::Raku::Ecosystem;
 use DSL::Entity::Geographics;
@@ -12,7 +12,7 @@ my $pCOMMAND = DSL::English::DataAcquisitionWorkflows::Grammar;
 
 $pCOMMAND.set-resources(DSL::Entity::Metadata::resource-access-object());
 
-my $actionsObj = DSL::English::DataAcquisitionWorkflows::Actions::WL::System.new(resources=>DSL::Entity::Metadata::resource-access-object());
+my $actionsObj = DSL::English::DataAcquisitionWorkflows::Actions::WL::Ecosystem.new(resources=>DSL::Entity::Metadata::resource-access-object());
 
 sub daw-parse( Str:D $command, Str:D :$rule = 'TOP' ) {
         $pCOMMAND.parse($command, :$rule);
@@ -76,7 +76,7 @@ my @testCommands2 = (
 'plot the timeline of my data acquisition'
 );
 
-my @targets = <WL-System>;
+my @targets = <WL-Ecosystem>;
 
 for @testCommands2 -> $c {
     say "=" x 60;

@@ -24,21 +24,21 @@ use DSL::English::DataAcquisitionWorkflows::Actions::Bulgarian::Standard;
 use DSL::English::DataAcquisitionWorkflows::Actions::Python::Ecosystem;
 use DSL::English::DataAcquisitionWorkflows::Actions::R::base;
 use DSL::English::DataAcquisitionWorkflows::Actions::Raku::Ecosystem;
-use DSL::English::DataAcquisitionWorkflows::Actions::WL::System;
+use DSL::English::DataAcquisitionWorkflows::Actions::WL::Ecosystem;
 
 #-----------------------------------------------------------
 my %targetToAction{Str} =
     "Bulgarian"         => DSL::English::DataAcquisitionWorkflows::Actions::Bulgarian::Standard,
-    "Mathematica"       => DSL::English::DataAcquisitionWorkflows::Actions::WL::System,
+    "Mathematica"       => DSL::English::DataAcquisitionWorkflows::Actions::WL::Ecosystem,
     "Python"            => DSL::English::DataAcquisitionWorkflows::Actions::Python::Ecosystem,
     "Python-Ecosystem"  => DSL::English::DataAcquisitionWorkflows::Actions::Python::Ecosystem,
     "R"                 => DSL::English::DataAcquisitionWorkflows::Actions::R::base,
     "R-base"            => DSL::English::DataAcquisitionWorkflows::Actions::R::base,
     "Raku"              => DSL::English::DataAcquisitionWorkflows::Actions::Raku::Ecosystem,
     "Raku-Ecosystem"    => DSL::English::DataAcquisitionWorkflows::Actions::Raku::Ecosystem,
-    "WL"                => DSL::English::DataAcquisitionWorkflows::Actions::WL::System,
-    "WL-Ecosystem"      => DSL::English::DataAcquisitionWorkflows::Actions::WL::System,
-    "WL-System"         => DSL::English::DataAcquisitionWorkflows::Actions::WL::System;
+    "WL"                => DSL::English::DataAcquisitionWorkflows::Actions::WL::Ecosystem,
+    "WL-Ecosystem"      => DSL::English::DataAcquisitionWorkflows::Actions::WL::Ecosystem,
+    "WL-System"         => DSL::English::DataAcquisitionWorkflows::Actions::WL::Ecosystem;
 
 my %targetToAction2{Str} = %targetToAction.grep({ $_.key.contains('-') }).map({ $_.key.subst('-', '::') => $_.value }).Hash;
 %targetToAction = |%targetToAction , |%targetToAction2;
@@ -67,9 +67,9 @@ sub DataAcquisitionWorkflowsGrammar() is export {
 }
 
 #-----------------------------------------------------------
-proto ToDataAcquisitionWorkflowCode(Str $command, Str $target = 'WL-System', | ) is export {*}
+proto ToDataAcquisitionWorkflowCode(Str $command, Str $target = 'WL-Ecosystem', | ) is export {*}
 
-multi ToDataAcquisitionWorkflowCode ( Str $command, Str $target = 'WL-System', *%args ) {
+multi ToDataAcquisitionWorkflowCode ( Str $command, Str $target = 'WL-Ecosystem', *%args ) {
 
     my $pCOMMAND = DataAcquisitionWorkflowsGrammar();
 
