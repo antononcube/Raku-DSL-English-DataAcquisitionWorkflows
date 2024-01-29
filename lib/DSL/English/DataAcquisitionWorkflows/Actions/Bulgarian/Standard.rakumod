@@ -34,8 +34,6 @@ use DSL::English::DataAcquisitionWorkflows::Grammar;
 use DSL::Shared::Actions::English::WL::PipelineCommand;
 use DSL::Shared::Actions::English::TimeIntervalSpec;
 
-use DSL::Entity::Foods::Grammar::EntityNames;
-
 use DSL::English::RecommenderWorkflows::Grammar;
 
 class DSL::English::DataAcquisitionWorkflows::Actions::Bulgarian::Standard
