@@ -8,13 +8,14 @@
   ],
   "auth": "github:antononcube",
   "depends": [
+    "DSL::English::DataQueryWorkflows",
+    "DSL::English::RecommenderWorkflows",
+    "DSL::Entity::Metadata",
+    "DSL::Shared",
     "Data::ExampleDatasets",
     "Data::Generators",
     "Data::Reshapers",
-    "Data::Summarizers",
-    "DSL::English::DataQueryWorkflows",
-    "DSL::Entity::Metadata",
-    "DSL::Shared"
+    "Data::Summarizers"
   ],
   "build-depends": [],
   "test-depends": [],
