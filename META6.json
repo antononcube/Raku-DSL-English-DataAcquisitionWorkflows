@@ -6,12 +6,12 @@
   "authors": [
     "Anton Antonov"
   ],
-  "auth": "github:antononcube",
+  "auth": "zef:antononcube",
   "depends": [
     "DSL::English::DataQueryWorkflows",
     "DSL::English::RecommenderWorkflows",
-    "DSL::Entity::Metadata",
-    "DSL::Shared",
+    "DSL::Entity::Metadata:ver<0.1.1+>",
+    "DSL::Shared:ver<0.2.3+>",
     "Data::ExampleDatasets",
     "Data::Generators",
     "Data::Reshapers",
