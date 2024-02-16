@@ -44,6 +44,8 @@ use DSL::English::DataAcquisitionWorkflows::Grammar::RecommendationsCommand;
 use DSL::English::DataAcquisitionWorkflows::Grammar::DataAcquisitionPhrases;
 use DSL::English::DataAcquisitionWorkflows::Grammar::RandomDataGeneration;
 
+use DSL::Entity::Metadata::ResourceAccess;
+
 grammar DSL::English::DataAcquisitionWorkflows::Grammar
         does DSL::Shared::Roles::English::TimeIntervalSpec
         does DSL::Shared::Roles::English::PipelineCommand
